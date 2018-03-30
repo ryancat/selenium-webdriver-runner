@@ -306,7 +306,9 @@ class TestRunner {
     })
 
     testProcess.stdout.on('data', (data) => {
-      this.log(`[${testProcess.pid}][${testProcess.__processLabel}] ${data}`)
+      if (data.toString().trim()) {
+        this.log(`[${testProcess.pid}][${testProcess.__processLabel}] ${data}`)
+      }
     })
   }
 
