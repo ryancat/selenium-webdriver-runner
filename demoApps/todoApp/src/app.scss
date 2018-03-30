@@ -1,0 +1,128 @@
+$border: #b7b7b7;
+$buttonBorderActive: #777777;
+$buttonBackground: #cfcfcf;
+$buttonBorderPositive: #00b300;
+$buttonBorderNegative: #ff0000;
+$lightBackground: #f5f5f5;
+
+.todoapp-container {
+  margin: 20px auto;
+  min-width: 400px;
+  max-width: 600px;
+  font-family: sans-serif;
+
+  section {
+    margin: 20px 0;
+  }
+
+  button {
+    height: 25px;
+    margin: 0 5px;
+    box-sizing: border-box;
+    outline: none;
+    border: 1px solid $border;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:active {
+      border-color: $buttonBorderActive;
+      background-color: $buttonBackground;
+    }
+  }
+
+  input {
+    height: 25px;
+    box-sizing: border-box;
+    outline: none;
+    padding: 0 5px;
+    font-size: 16px;
+    border: 1px solid $border;
+    border-radius: 3px;
+  }
+
+  .section-header {
+    font-weight: bold;
+    border-bottom: 1px solid $border;
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0;
+    background-color: $lightBackground;
+  }
+
+  .section-body {
+    display: flex;
+    align-items: center;
+
+    .longest {
+      flex-grow: 1;
+
+      span,
+      input {
+        width: 100%;
+      }
+    }
+
+    .task-button {
+      flex-shrink: 0;
+
+      &.correct {
+        border-color: $buttonBorderPositive;
+      }
+
+      &.wrong {
+        border-color: $buttonBorderNegative;
+      }
+    }
+  }
+
+  .todo-list,
+  .done-list {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  .todo-item,
+  .done-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px dashed;
+    padding: 10px 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    &.edit {
+      .task-content {
+        input {
+          display: block;
+        }
+
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .done-item {
+    .task-content {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+  }
+
+  .task-content {
+    font-size: 16px;
+    
+    input {
+      display: none;
+    }
+  }
+}
