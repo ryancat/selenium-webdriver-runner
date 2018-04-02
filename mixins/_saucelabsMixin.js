@@ -1,5 +1,6 @@
 // Mixin for test runner
 const sauceConnectLauncher = require('sauce-connect-launcher');
+const {log, infoLog, warnLog, errorLog} = require('../libs/logUtil')
 
 module.exports = {
   /**
@@ -7,11 +8,11 @@ module.exports = {
    */
   createSauceConnectProcess: async function () {
     if (this.sauceConnectProcess) {
-      this.warnLog("Sauce connect process exists")
+      warnLog("Sauce connect process exists")
       return this.sauceConnectProcess
     }
 
-    this.infoLog('Starting sauce connect...')
+    infoLog('Starting sauce connect...')
 
     await new Promise((resolve, reject) => {
       sauceConnectLauncher({
@@ -19,11 +20,11 @@ module.exports = {
         accessKey: this.testConfig.saucelabs.token
       }, async (err, sauceConnectProcess) => {
         if (err) {
-          this.errorLog(err.message);
+          errorLog(err.message);
           reject(err);
         }
 
-        this.infoLog("Sauce connect ready");
+        infoLog("Sauce connect ready");
         this.sauceConnectProcess = sauceConnectProcess
         resolve(sauceConnectProcess);
       });
@@ -32,18 +33,18 @@ module.exports = {
 
   closeSauceConnectProcess: async function () {
     if (!this.sauceConnectProcess) {
-      this.warnLog('No sauce connect process found')
+      warnLog('No sauce connect process found')
       return
     }
 
     await new Promise((resolve, reject) => {
       this.sauceConnectProcess.close(function (err) {
         if (err) {
-          this.errorLog(err.message)
+          errorLog(err.message)
           reject(err)
         }
         
-        this.log("Sauce connect process closed")
+        log("Sauce connect process closed")
         this.sauceConnectProcess = null
         resolve(true)
       }); 

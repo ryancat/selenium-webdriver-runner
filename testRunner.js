@@ -107,10 +107,10 @@ class TestRunner {
       this.testConfig.coverage.outputDir = path.resolve(this.testConfig.rootDir, this.testConfig.coverage.outputDir)
     }
 
-    infoLog('\n-------------------------')
-    infoLog('Execute test with config:')
+    log('\n-------------------------')
+    log('Execute test with config:')
     log(this.testConfig)
-    infoLog('-------------------------\n')
+    log('-------------------------\n')
 
     // The array of concurrent test child processes
     this.testProcesses = []
@@ -137,6 +137,8 @@ class TestRunner {
       process.exit(0)
     }
 
+    infoLog(`Will test against capabilities: ${capabilities.map((cap) => cap.name).join(', ')}`)
+
     if (testConfig.server.isLocal) {
       // Start test environment
       // We are configured to run a local server
@@ -147,13 +149,17 @@ class TestRunner {
     // create tunnel to remote test environments.
     // Assuming we are using saucelabs.
     // TODO: considering other test environments platform
-    if (program.saucelabs && testConfig.saucelabs.forCapabilities.length) {
+    const saucelabsCapabilities = testConfig.saucelabs.forCapabilities
+    if (program.saucelabs 
+      && saucelabsCapabilities.length
+      && capabilities.some((cap) => saucelabsCapabilities.includes(cap))) {
       this.sauceConnectProcess = await this.createSauceConnectProcess()
     }
 
     for (let capability of capabilities) {
       // Start a child process for each capability
       if (program.saucelabs && testConfig.saucelabs.forCapabilities.includes(capability.name)) {
+        infoLog(`Start test against ${capability.name} locally`)
         // This capability should run with saucelabs
         // When running on saucelabs, we are creating a session for each capability
         // with each spec, as long as we are within maxInstance limit.
@@ -163,6 +169,7 @@ class TestRunner {
         }
       }
       else {
+        infoLog(`\nStart test against ${capability.name} remotely`)
         // When running locally, we can only have the same capability
         // running for all specs due to the limitation of drivers
         this.startTestProcessThrottled(capability, testConfig.specs)
@@ -209,7 +216,9 @@ class TestRunner {
     if (program.saucelabs && this.testConfig.saucelabs.forCapabilities.includes(capability.name)) {
       // We are testing with saucelabs
       Object.assign(testEnv, {
-        USE_SAUCELABS: true
+        USE_SAUCELABS: true,
+        SAUCELABS_USER: this.testConfig.saucelabs.user,
+        SAUCELABS_APITOKEN: this.testConfig.saucelabs.token
       });
     }
 
@@ -237,7 +246,9 @@ class TestRunner {
     testRunner.testProcesses.push(testProcess)
     testProcess.__processLabel = capabilityArg
     this.listenTestProcess(testProcess)
-    infoLog(`Running test process: ${testProcess.spawnargs.join(' ')}`)
+    infoLog('\n-------------------------')
+    infoLog(`Running test process [${testProcess.pid}]: ${testProcess.spawnargs.join(' ')}`)
+    infoLog('-------------------------\n')
   }
 
   /**
@@ -349,7 +360,7 @@ class TestRunner {
 
       // TODO: Kill test processes, if there is any (there shouldn't be any)
       // log(`Tests finish in ${testRunner.getDuration()} ms.`)
-      (code === 0 ? infoLog : errorLog)(`Test runner exit with code ${code}.`)
+      (code === 0 ? infoLog : errorLog)(`Test runner exit with code ${code} in ${Date.now() - this.startTimestamp} ms`)
     });
   }
 

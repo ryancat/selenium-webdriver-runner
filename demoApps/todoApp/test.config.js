@@ -56,6 +56,13 @@ const config = {
     // { name: 'ie' }
   ],
 
+  // Config saucelabs connection
+  saucelabs: {
+    forCapabilities: ['ie', 'safari'],
+    user: process.env.SAUCELABS_USER,
+    token: process.env.SAUCELABS_APITOKEN
+  },
+
   // // The reporter that used other than mocha default.
   // // Need to set environment variable ADD_JUNIT_REPORT to take effect.
   // reporter: {
