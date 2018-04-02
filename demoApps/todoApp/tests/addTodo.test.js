@@ -35,7 +35,10 @@ describe('Add todo item', function () {
 
   afterEach(async function () { 
     // await quitDriver(driver, this.currentTest)
-    await todoPage.quitDriver()
+    await todoPage.quitDriver({
+      testName: `${this.currentTest.parent.title} | ${this.currentTest.title}`,
+      isPassed: this.currentTest.state === 'passed'
+    })
   })
 
   it('should not add anything when add item content is empty', async function () {
@@ -44,11 +47,13 @@ describe('Add todo item', function () {
     // .done()
 
     // await assertChartVisualRegression(barChartSection, driver, this.test)
-    const todoItems = todoPage.getTodoItems()
-    const doneItems = todoPage.getDoneItems()
-    await todoPage.pipe('open', 'clickAddItemButton').done()
-    const currentTodoItems = todoPage.getTodoItems()
-    const currentDoneItems = todoPage.getDoneItems()
+    await todoPage.open()
+    const todoItems = await todoPage.getTodoItems()
+    const doneItems = await todoPage.getDoneItems()
+    await todoPage.clickAddItemButton()
+    const currentTodoItems = await todoPage.getTodoItems()
+    const currentDoneItems = await todoPage.getDoneItems()
+
     assert.equal(currentTodoItems.length, todoItems.length)
     assert.equal(currentDoneItems.length, doneItems.length)
   })

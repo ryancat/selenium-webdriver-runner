@@ -1,3 +1,4 @@
+const {By} = require('selenium-webdriver')
 const {driverMixin, pipeMixin} = require('../../../../mixins/forDriver')
 
 // console.log('driverMixin.startDriver', driverMixin.startDriver)
@@ -28,11 +29,30 @@ module.exports = class TodoAppPage {
     addMixin(this, pipeMixin)
   }
 
-  open () {
+  get todoTaskSection () {
+    return this.driver.findElement(By.css('section.todo-task-section'))
+  }
 
+  get doneTaskSection () {
+    return this.driver.findElement(By.css('section.done-task-section'))
+  }
+
+  /**
+   * Open the todo app page
+   */
+  async open () {
+    await this.openPath('/')
   }
 
   clickAddItemButton () {
 
+  }
+
+  async getTodoItems () {
+    return await this.todoTaskSection.findElements(By.css('li.todo-item'))
+  }
+
+  async getDoneItems () {
+    return await this.doneTaskSection.findElements(By.css('li.done-item'))
   }
 }
