@@ -68,12 +68,11 @@ describe('Add todo item', function () {
     .pipe(async () => await todoPage.addTodoItemContent(newTodoContent))
     .pipe('clickAddItemButton')
     .done()
-    const currentTodoItems = await todoPage.getTodoItems()
 
+    const currentTodoItems = await todoPage.getTodoItems()
     assert.equal(currentTodoItems.length, todoItems.length + 1)
     
-    const todoItemContents = await Promise.all(currentTodoItems.map(async (todoItem) => await todoItem.getText()))
-    console.log('todoItemContents', todoItemContents)
+    const todoItemContents = await todoPage.getTodoItemContents()
     assert(todoItemContents.indexOf(newTodoContent) >= 0)
   })
 

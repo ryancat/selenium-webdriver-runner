@@ -65,21 +65,21 @@ const config = {
 
   // // The reporter that used other than mocha default.
   // // Need to set environment variable ADD_JUNIT_REPORT to take effect.
-  // reporter: {
-  //   name: 'mocha-junit-reporter',
-  //   options: {
-  //     // Options for mocha-junit-reporter
-  //     // Add hash to mochaFile to handle parallel running reports
-  //     mochaFile: 'reports/junit/functional-test-results.[hash].xml'
-  //   }
-  // },
+  reporter: {
+    name: 'mocha-junit-reporter',
+    options: {
+      // Options for mocha-junit-reporter
+      // Add hash to mochaFile to handle parallel running reports
+      mochaFile: '.reports/junit/functional-test-results.[hash].xml'
+    }
+  },
 
   // // For generating coverage report data. Prepare for nyc package.
   // // Need to set environment variable ADD_COVERAGE_REPORT to take effect.
-  // coverage: {
-  //   outputDir: '.nyc_output/',
-  //   filename: 'functional.coverage.[hash].json'
-  // }
+  coverage: {
+    outputDir: '.coverage_data/',
+    filename: 'functional.coverage.[hash].json'
+  }
 };
 
 module.exports = config;

@@ -96,15 +96,19 @@ class TestRunner {
     // Add program arguments into testConfig
 
     // Overwrite the file paths to based on root directory
-    if (this.testConfig.specs) {
-      if (!Array.isArray(this.testConfig.specs)) {
-        this.testConfig.specs = [this.testConfig.specs]
-      }
+    if (!Array.isArray(this.testConfig.specs)) {
+      this.testConfig.specs = [this.testConfig.specs]
+    }
+    this.testConfig.specs = this.testConfig.specs
+                          .map((spec) => this.getAbsPath(spec, this.testConfig.rootDir))
+    
+    this.testConfig.coverage.outputDir = this.getAbsPath(this.testConfig.coverage.outputDir, this.testConfig.rootDir)
 
-      this.testConfig.specs = this.testConfig.specs
-                              .map((spec) => path.resolve(this.testConfig.rootDir, spec))
-
-      this.testConfig.coverage.outputDir = path.resolve(this.testConfig.rootDir, this.testConfig.coverage.outputDir)
+    if (this.testConfig.testFramework.reporter
+      && this.testConfig.testFramework.reporter.name === 'mocha-junit-reporter'
+      && this.testConfig.testFramework.reporter.options 
+      && this.testConfig.testFramework.reporter.options.mochaFile) {
+      this.testConfig.testFramework.reporter.options.mochaFile = this.getAbsPath(this.testConfig.testFramework.reporter.options.mochaFile, this.testConfig.rootDir)
     }
 
     log('\n-------------------------')
@@ -230,7 +234,7 @@ class TestRunner {
       });
     }
 
-    if (program.converage) {
+    if (program.coverage) {
       // Passing coverage report information to test framework
       Object.assign(testEnv, {
         COVERAGE_REPORT_DIR: this.getAbsPath(this.testConfig.coverage.outputDir),
@@ -246,6 +250,7 @@ class TestRunner {
     testRunner.testProcesses.push(testProcess)
     testProcess.__processLabel = capabilityArg
     this.listenTestProcess(testProcess)
+
     infoLog('\n-------------------------')
     infoLog(`Running test process [${testProcess.pid}]: ${testProcess.spawnargs.join(' ')}`)
     infoLog('-------------------------\n')
@@ -254,8 +259,8 @@ class TestRunner {
   /**
    * Get the absolute path within this project
    */
-  getAbsPath (somePath) {
-    return path.isAbsolute(somePath) ? path.normalize(somePath) : path.resolve(process.cwd(), somePath)
+  getAbsPath (somePath, rootPath = process.cwd()) {
+    return path.resolve(rootPath, somePath)
   }
 
   /**

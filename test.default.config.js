@@ -13,7 +13,19 @@ const config = {
   ],
 
   testFramework: {
-    script: 'mocha'
+    script: 'mocha',
+    // The reporter that used other than mocha default.
+    // Need to pass in argument --use-reporter to take effect
+    reporter: {
+      name: 'mocha-junit-reporter',
+      options: {
+        // Options for mocha-junit-reporter
+        // Add hash to mochaFile to handle parallel running reports
+        mochaFile: '.reports/junit/test-results.[hash].xml'
+      }
+    },
+    // Test timeout is zero for unlimited timeout
+    timeout: 0
   },
 
   // Config for server that host app to be tested

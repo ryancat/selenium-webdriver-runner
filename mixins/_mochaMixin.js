@@ -18,7 +18,7 @@ module.exports = {
     for (let reporterOption in (testReporterConfig.options || {})) {
       switch (reporterOption) {
         case 'mochaFile':
-          reporterOptions += `,${reporterOption}=${this.getAbsPath(testReporterConfig.options[reporterOption])}`
+          reporterOptions += `,${reporterOption}=${testReporterConfig.options.mochaFile}`
           break;
         default:
           reporterOptions += `,${reporterOption}=${testReporterConfig.options[reporterOption].toString().replace(/\s/g, '_')}`

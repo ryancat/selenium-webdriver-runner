@@ -13,7 +13,7 @@ const crypto = require('crypto')
 const fs = require('fs')
 
 // Thrid party packages
-const {Builder} = require('selenium-webdriver')
+const {Builder, Browser} = require('selenium-webdriver')
 const shell = require('shelljs')
 const Saucelabs = require('saucelabs')
 const saucelabs = new Saucelabs({
@@ -123,7 +123,7 @@ module.exports = {
       infoLog('Writing coverage report...')
       // We need to generate coverage report data
       // assume all javascripts are instrumented.
-      const coverageObj = await driverUtil._getCoverageObj(),
+      const coverageObj = await this._getCoverageObj(),
             coverageReportDir = process.env.COVERAGE_REPORT_DIR,
             coverageReportName = process.env.COVERAGE_FILENAME
 

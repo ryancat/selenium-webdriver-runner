@@ -68,7 +68,17 @@ module.exports = class TodoAppPage {
     return await this.todoTaskSection.findElements(By.css('li.todo-item .task-content'))
   }
 
+  async getTodoItemContents () {
+    const todoItems = await this.getTodoItems()
+    return await Promise.all(todoItems.map(async (todoItem) => await todoItem.getText()))
+  }
+
   async getDoneItems () {
     return await this.doneTaskSection.findElements(By.css('li.done-item .task-content'))
+  }
+
+  async getDoneItemContents () {
+    const doneItems = await this.getDoneItems()
+    return await Promise.all(doneItems.map(async (doneItem) => await doneItem.getText()))
   }
 }
