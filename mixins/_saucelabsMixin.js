@@ -1,3 +1,4 @@
+// Mixin for test runner
 const sauceConnectLauncher = require('sauce-connect-launcher');
 
 module.exports = {
