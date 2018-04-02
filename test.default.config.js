@@ -25,7 +25,11 @@ const config = {
       }
     },
     // Test timeout is zero for unlimited timeout
-    timeout: 0
+    timeout: 0,
+    coverage: {
+      reportDir: '.reports/coverage/',
+      reporters: ['text', 'html']
+    }
   },
 
   // Config for server that host app to be tested

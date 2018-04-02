@@ -10,9 +10,11 @@
     "build": "npm run build:todoApp",
     "build:prod": "npm run build:todoApp:prod",
     "build:coverage": "npm run build:todoApp:coverage",
-    "test:todoApp": "node testRunner --config ./demoApps/todoApp/test.config.js && nyc report --reporter=text --cwd=./demoApps/todoApp/",
+    "test:todoApp": "node testRunner --config ./demoApps/todoApp/test.config.js",
     "test:todoApp:reports": "node testRunner --config ./demoApps/todoApp/test.config.js --use-reporter",
+    "test:todoApp:coverage": "node testRunner --config ./demoApps/todoApp/test.config.js --add-coverage-report",
     "test:reports": "npm run test:todoApp:reports",
+    "test:coverage": "npm run test:todoApp:coverage",
     "test": "npm run test:todoApp"
   },
   "repository": {

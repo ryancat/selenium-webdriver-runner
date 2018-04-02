@@ -30,14 +30,14 @@ const {log, infoLog, warnLog, errorLog} = require('./libs/logUtil')
 
 // Mixins
 // const {saucelabsMixin} = require('./mixins/testRunner')
-const {mochaMixin, saucelabsMixin} = require('./mixins/forTestRunner')
+const {mochaMixin, saucelabsMixin, nycMixin} = require('./mixins/forTestRunner')
 
 // Parse progress.argv
 program
   .version(require(path.resolve(__dirname, 'package.json')).version)
   .option('-c, --config <path>', 'Test config file path')
-  .option('--no-saucelabs', 'Do NOT use saucelabs for testing environment')
   .option('--use-reporter', 'Use test reporter instead of console output for test results')
+  .option('--add-coverage-report', 'Add coverage report along with tests')
   .parse(process.argv)
 
 // Get the config file
@@ -77,6 +77,7 @@ class TestRunner {
     // Add mixins
     addMixin(this, saucelabsMixin)
     addMixin(this, mochaMixin)
+    addMixin(this, nycMixin)
 
     // Update test config with defaults
     if (!testConfig) {
@@ -101,13 +102,16 @@ class TestRunner {
     this.testConfig.specs = this.testConfig.specs
                           .map((spec) => this.getAbsPath(spec, this.testConfig.rootDir))
     
-    // this.testConfig.coverage.outputDir = this.getAbsPath(this.testConfig.coverage.outputDir, this.testConfig.rootDir)
-
     if (this.testConfig.testFramework.reporter
       && this.testConfig.testFramework.reporter.name === 'mocha-junit-reporter'
       && this.testConfig.testFramework.reporter.options 
       && this.testConfig.testFramework.reporter.options.mochaFile) {
       this.testConfig.testFramework.reporter.options.mochaFile = this.getAbsPath(this.testConfig.testFramework.reporter.options.mochaFile, this.testConfig.rootDir)
+    }
+
+    if (this.testConfig.testFramework.coverage
+      && this.testConfig.testFramework.coverage.reportDir) {
+      this.testConfig.testFramework.coverage.reportDir = this.getAbsPath(this.testConfig.testFramework.coverage.reportDir, this.testConfig.rootDir)
     }
 
     log('\n-------------------------')
@@ -192,11 +196,11 @@ class TestRunner {
     if (activeProcesses.length > maxInstance) {
       // Need to throttle as we are passing maximum allowed test instance number
       setTimeout(() => {
-        this.startTestProcessThrottled(...args);
-      }, TEST_THROTTLE_INTERVAL);
+        this.startTestProcessThrottled(...args)
+      }, TEST_THROTTLE_INTERVAL)
     }
     else {
-      this.startTestProcess(...args);
+      this.startTestProcess(...args)
     }
   }
 
@@ -218,7 +222,7 @@ class TestRunner {
       // See https://istanbul.js.org/docs/advanced/coverage-object-report/
       COVERAGE_REPORT_DIR: this.getAbsPath('.nyc_output/', this.testConfig.rootDir),
       COVERAGE_FILENAME: 'functional.coverage.[hash].json'
-    };
+    }
 
     if (program.saucelabs && this.testConfig.saucelabs.forCapabilities.includes(capability.name)) {
       // We are testing with saucelabs
@@ -226,7 +230,7 @@ class TestRunner {
         USE_SAUCELABS: true,
         SAUCELABS_USER: this.testConfig.saucelabs.user,
         SAUCELABS_APITOKEN: this.testConfig.saucelabs.token
-      });
+      })
     }
 
     if (this.testConfig.server) {
@@ -234,7 +238,14 @@ class TestRunner {
       Object.assign(testEnv, {
         TEST_SERVER_PORT: this.testConfig.server.port,
         TEST_SERVER_BASE_URL: this.testConfig.server.baseUrl
-      });
+      })
+    }
+
+    if (program.addCoverageReport) {
+      // Passing server information to test framework
+      Object.assign(testEnv, {
+        ADD_COVERAGE_REPORT: true
+      })
     }
 
     // Running child process with defined test framework
@@ -285,7 +296,7 @@ class TestRunner {
           warnLog('pattern', pattern, 'did not match any file')
         }
 
-        files = files.concat(filenames);
+        files = files.concat(filenames)
     }
 
     return files
@@ -304,9 +315,15 @@ class TestRunner {
       // Need to remove this test process from main process
       this.testProcesses.splice(this.testProcesses.indexOf(testProcess), 1)
       
-      // If there is no more test processes available, the main process will exit
       if (this.testProcesses.length === 0) {
-        process.exit(this.exitCode)
+        // If there is no more test processes available, all tests have been finished.
+        if (program.addCoverageReport) {
+          // Running coverage report with nyc package
+          this.startCoverageReportProcess()
+        }
+        else {
+          process.exit(this.exitCode)
+        }
       }
     })
 
@@ -339,7 +356,7 @@ class TestRunner {
 
     process
     .on('message', (message) => {
-      log(message);
+      log(message)
     })
     .on('SIGINT', () => {
       // ctrl+c event
@@ -349,7 +366,7 @@ class TestRunner {
     .on('exit', async (code, err) => {
       // Kill the local server, if there is any
       if (this.serverProcess) {
-        process.kill(this.serverProcess.pid);
+        process.kill(this.serverProcess.pid)
       }
       
       if (this.sauceConnectProcess) {
@@ -361,7 +378,7 @@ class TestRunner {
       // TODO: Kill test processes, if there is any (there shouldn't be any)
       // log(`Tests finish in ${testRunner.getDuration()} ms.`)
       (code === 0 ? infoLog : errorLog)(`Test runner exit with code ${code} in ${Date.now() - this.startTimestamp} ms`)
-    });
+    })
   }
 
   /**
@@ -377,9 +394,23 @@ class TestRunner {
         shell: true,
         // Detach the server process so that it's not affecting current process
         detached: true
-      });
+      })
   }
 
+  /**
+   * Start the nyc test coverage process
+   */
+  startCoverageReportProcess () {
+    infoLog('Starting coverage report process...')
+    
+    // 'nyc report --reporter=text --cwd=./demoApps/todoApp/'
+    this.runCoverageReportProcess()
+    .on('exit', (code) => {
+      (code === 0 ? infoLog : errorLog)(`Coverage report process exit with code ${code}`)
+      this.exitCode = this.exitCode || code
+      process.exit(this.exitCode)
+    })
+  }
 }
 
 const testRunner = new TestRunner(testConfig)

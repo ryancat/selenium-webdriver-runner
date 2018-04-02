@@ -117,7 +117,7 @@ module.exports = {
     const capability = this.getCapability()
 
     // TODO: IE has issue generating coverage report json. Need to fix this properly
-    if (process.env.COVERAGE_REPORT_DIR && process.env.COVERAGE_FILENAME && capability.name !== Browser.IE) {
+    if (process.env.ADD_COVERAGE_REPORT && capability.name !== Browser.IE) {
       infoLog('Writing coverage report...')
       // We need to generate coverage report data
       // assume all javascripts are instrumented.

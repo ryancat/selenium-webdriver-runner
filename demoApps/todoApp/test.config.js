@@ -38,7 +38,11 @@ const config = {
       }
     },
     // Test timeout is zero for unlimited timeout
-    timeout: 0
+    timeout: 0,
+    coverage: {
+      reportDir: '.reports/coverage/',
+      reporters: ['text', 'html']
+    }
   },
 
   // Config for server that host app to be tested
@@ -61,17 +65,6 @@ const config = {
     forCapabilities: ['ie', 'safari'],
     user: process.env.SAUCELABS_USER,
     token: process.env.SAUCELABS_APITOKEN
-  },
-
-  // // The reporter that used other than mocha default.
-  // // Need to set environment variable ADD_JUNIT_REPORT to take effect.
-  reporter: {
-    name: 'mocha-junit-reporter',
-    options: {
-      // Options for mocha-junit-reporter
-      // Add hash to mochaFile to handle parallel running reports
-      mochaFile: '.reports/junit/functional-test-results.[hash].xml'
-    }
   }
 };
 
