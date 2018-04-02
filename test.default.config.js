@@ -48,13 +48,7 @@ const config = {
     { name: 'firefox', /* version: '59', platform: 'MAC' */ },
     // { name: 'safari' },
     // { name: 'ie' }
-  ],
-
-  // For coverage report information
-  coverage: {
-    outputDir: '.nyc_output/',
-    filename: 'coverage.[hash].json'
-  }
+  ]
 };
 
 module.exports = config;

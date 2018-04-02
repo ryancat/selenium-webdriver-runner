@@ -72,13 +72,6 @@ const config = {
       // Add hash to mochaFile to handle parallel running reports
       mochaFile: '.reports/junit/functional-test-results.[hash].xml'
     }
-  },
-
-  // // For generating coverage report data. Prepare for nyc package.
-  // // Need to set environment variable ADD_COVERAGE_REPORT to take effect.
-  coverage: {
-    outputDir: '.coverage_data/',
-    filename: 'functional.coverage.[hash].json'
   }
 };
 

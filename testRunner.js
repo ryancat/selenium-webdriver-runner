@@ -37,7 +37,6 @@ program
   .version(require(path.resolve(__dirname, 'package.json')).version)
   .option('-c, --config <path>', 'Test config file path')
   .option('--no-saucelabs', 'Do NOT use saucelabs for testing environment')
-  .option('--no-coverage', 'Do NOT create coverage report')
   .option('--use-reporter', 'Use test reporter instead of console output for test results')
   .parse(process.argv)
 
@@ -102,7 +101,7 @@ class TestRunner {
     this.testConfig.specs = this.testConfig.specs
                           .map((spec) => this.getAbsPath(spec, this.testConfig.rootDir))
     
-    this.testConfig.coverage.outputDir = this.getAbsPath(this.testConfig.coverage.outputDir, this.testConfig.rootDir)
+    // this.testConfig.coverage.outputDir = this.getAbsPath(this.testConfig.coverage.outputDir, this.testConfig.rootDir)
 
     if (this.testConfig.testFramework.reporter
       && this.testConfig.testFramework.reporter.name === 'mocha-junit-reporter'
@@ -214,7 +213,11 @@ class TestRunner {
 
     let testEnv = {
       // Note: Firefox has issue with undefined version or platform
-      TEST_CAPABILITY: capabilityArg
+      TEST_CAPABILITY: capabilityArg,
+      // With nyc package, it will look for .nyc_output by default and there is no need to change that
+      // See https://istanbul.js.org/docs/advanced/coverage-object-report/
+      COVERAGE_REPORT_DIR: this.getAbsPath('.nyc_output/', this.testConfig.rootDir),
+      COVERAGE_FILENAME: 'functional.coverage.[hash].json'
     };
 
     if (program.saucelabs && this.testConfig.saucelabs.forCapabilities.includes(capability.name)) {
@@ -231,14 +234,6 @@ class TestRunner {
       Object.assign(testEnv, {
         TEST_SERVER_PORT: this.testConfig.server.port,
         TEST_SERVER_BASE_URL: this.testConfig.server.baseUrl
-      });
-    }
-
-    if (program.coverage) {
-      // Passing coverage report information to test framework
-      Object.assign(testEnv, {
-        COVERAGE_REPORT_DIR: this.getAbsPath(this.testConfig.coverage.outputDir),
-        COVERAGE_FILENAME: this.testConfig.coverage.filename
       });
     }
 

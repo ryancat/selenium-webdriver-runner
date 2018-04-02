@@ -114,8 +114,6 @@ module.exports = {
    * Quit a driver with context
    */
   quitDriver: async function (testResult = {}) {
-    // console.log(process.env.ADD_COVERAGE_REPORT && capability.name !== Browser.IE)
-    // console.log('try to quit driver', process.env.ADD_COVERAGE_REPORT && capability.name !== Browser.IE)
     const capability = this.getCapability()
 
     // TODO: IE has issue generating coverage report json. Need to fix this properly
