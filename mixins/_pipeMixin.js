@@ -1,3 +1,4 @@
+const {log, infoLog, warnLog, errorLog} = require('../libs/logUtil')
 
 module.exports = {
   /**
@@ -13,7 +14,7 @@ module.exports = {
       (prevPromise, nextPromiseCreator) => {
         return prevPromise.then((prevResolved) => this._getTaskToPipe(nextPromiseCreator)(prevResolved))
       }, 
-      this._piped)
+      this._piped || Promise.resolve(null))
     
     // Add pipe to _piped so we can chain the pipe
     return this
@@ -39,8 +40,8 @@ module.exports = {
         case '[object String]':
           // When we see a string, we will try to pipe the corresponding function
           // on the context for the pipe runner
-          taskToPipe = this.context[nextPromiseCreator]
-          ? this.context[nextPromiseCreator].bind(this.context)
+          taskToPipe = this[nextPromiseCreator]
+          ? this[nextPromiseCreator].bind(this)
           : () => Promise.reject(`Task not found in context: ${nextPromiseCreator}`)
           break
 

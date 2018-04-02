@@ -58,6 +58,25 @@ describe('Add todo item', function () {
     assert.equal(currentDoneItems.length, doneItems.length)
   })
 
+  it('should add todo list to todo items when fill in content and click on add item button', async function () {
+    const newTodoContent = 'some new todo item'
+
+    await todoPage.open()
+    const todoItems = await todoPage.getTodoItems()
+
+    await todoPage
+    .pipe(async () => await todoPage.addTodoItemContent(newTodoContent))
+    .pipe('clickAddItemButton')
+    .done()
+    const currentTodoItems = await todoPage.getTodoItems()
+
+    assert.equal(currentTodoItems.length, todoItems.length + 1)
+    
+    const todoItemContents = await Promise.all(currentTodoItems.map(async (todoItem) => await todoItem.getText()))
+    console.log('todoItemContents', todoItemContents)
+    assert(todoItemContents.indexOf(newTodoContent) >= 0)
+  })
+
   // it('should be able to zoom out by click zoom out button', async function () {
   //   await pipeRunner
   //   .pipe('open', 'zoomIn', 'zoomOut')

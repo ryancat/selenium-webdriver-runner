@@ -29,12 +29,24 @@ module.exports = class TodoAppPage {
     addMixin(this, pipeMixin)
   }
 
+  get newTaskSection () {
+    return this.driver.findElement(By.css('section.new-task-section'))
+  }
+
   get todoTaskSection () {
     return this.driver.findElement(By.css('section.todo-task-section'))
   }
 
   get doneTaskSection () {
     return this.driver.findElement(By.css('section.done-task-section'))
+  }
+
+  get addTodoItemButton () {
+    return this.newTaskSection.findElement(By.css('button.to-add'))
+  }
+
+  get addTodoItemInput () {
+    return this.newTaskSection.findElement(By.css('input.task-input'))
   }
 
   /**
@@ -44,15 +56,19 @@ module.exports = class TodoAppPage {
     await this.openPath('/')
   }
 
-  clickAddItemButton () {
+  async clickAddItemButton () {
+    await this.addTodoItemButton.click()
+  }
 
+  async addTodoItemContent (todoContent = 'abcd') {
+    await this.addTodoItemInput.sendKeys(todoContent)
   }
 
   async getTodoItems () {
-    return await this.todoTaskSection.findElements(By.css('li.todo-item'))
+    return await this.todoTaskSection.findElements(By.css('li.todo-item .task-content'))
   }
 
   async getDoneItems () {
-    return await this.doneTaskSection.findElements(By.css('li.done-item'))
+    return await this.doneTaskSection.findElements(By.css('li.done-item .task-content'))
   }
 }
