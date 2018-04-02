@@ -20,4 +20,4 @@ I want to show you it's actually not that hard to create a test runner that work
 
 
 ## Todo list
-- Adding code
+- Hook up with saucelabs CI tool
