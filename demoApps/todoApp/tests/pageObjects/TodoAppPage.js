@@ -70,7 +70,7 @@ module.exports = class TodoAppPage {
 
   async getTodoItemContents () {
     const todoItems = await this.getTodoItems()
-    return await Promise.all(todoItems.map(async (todoItem) => await todoItem.getText()))
+    return await Promise.all(todoItems.map(async (todoItem) => (await todoItem.getText()).trim()))
   }
 
   async getDoneItems () {
@@ -79,6 +79,6 @@ module.exports = class TodoAppPage {
 
   async getDoneItemContents () {
     const doneItems = await this.getDoneItems()
-    return await Promise.all(doneItems.map(async (doneItem) => await doneItem.getText()))
+    return await Promise.all(doneItems.map(async (doneItem) => (await doneItem.getText()).trim()))
   }
 }

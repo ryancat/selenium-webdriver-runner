@@ -56,15 +56,22 @@ const config = {
   capabilities: [
     { name: 'chrome', /* version: '65', platform: 'MAC' */ },
     { name: 'firefox', /* version: '59', platform: 'MAC' */ },
-    // { name: 'safari' },
-    // { name: 'ie' }
+    { name: 'safari' },
+    { name: 'ie' }
   ],
 
   // Config saucelabs connection
   saucelabs: {
-    forCapabilities: ['ie', 'safari'],
+    forCapabilities: ['ie'],
     user: process.env.SAUCELABS_USER,
     token: process.env.SAUCELABS_APITOKEN
+  },
+
+  // Screenshot for visual regression test
+  screenshot: {
+    baselineDir: 'tests/baseline/',
+    diffDir: '.reports/screenshots/diff/',
+    screenshotDir: '.reports/screenshots/shots/'
   }
 };
 

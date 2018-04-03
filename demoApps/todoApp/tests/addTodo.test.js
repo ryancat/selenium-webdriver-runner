@@ -75,30 +75,4 @@ describe('Add todo item', function () {
     const todoItemContents = await todoPage.getTodoItemContents()
     assert(todoItemContents.indexOf(newTodoContent) >= 0)
   })
-
-  // it('should be able to zoom out by click zoom out button', async function () {
-  //   await pipeRunner
-  //   .pipe('open', 'zoomIn', 'zoomOut')
-  //   .done()
-
-  //   await assertChartVisualRegression(barChartSection, driver, this.test)
-  // })
-
-  // // TODO: Safari cannot perform clickChartAtCenter
-  // (checkCapability.isSafari() ? it.skip : it)('should be able to zoom in by click on chart while in zoom mode', async function () {
-  //   await pipeRunner
-  //   .pipe('open', 'selectZoomMode', 'clickChartAtCenter')
-  //   .done()
-    
-  //   await assertChartVisualRegression(barChartSection, driver, this.test)
-  // })
-
-  // it('should reset zoom when click on reset button', async function () {
-  //   await pipeRunner
-  //   .pipe('open', 'zoomIn', 'resetChart')
-  //   .done()
-
-  //   await assertChartVisualRegression(barChartSection, driver, this.test)
-  // })
-
 })

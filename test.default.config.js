@@ -39,6 +39,14 @@ const config = {
     port: 8000
   },
 
+  // Target browser environments
+  capabilities: [
+    { name: 'chrome', /* version: '65', platform: 'MAC' */ },
+    { name: 'firefox', /* version: '59', platform: 'MAC' */ },
+    // { name: 'safari' },
+    // { name: 'ie' }
+  ],
+
   // Config saucelabs connection
   saucelabs: {
     forCapabilities: [],
@@ -46,13 +54,12 @@ const config = {
     token: process.env.SAUCELABS_TOKEN
   },
 
-  // Target browser environments
-  capabilities: [
-    { name: 'chrome', /* version: '65', platform: 'MAC' */ },
-    { name: 'firefox', /* version: '59', platform: 'MAC' */ },
-    // { name: 'safari' },
-    // { name: 'ie' }
-  ]
+  // Screenshot for visual regression test
+  screenshot: {
+    baselineDir: 'tests/baseline/',
+    diffDir: '.reports/screenshots/diff/',
+    screenshotDir: '.reports/screenshots/shots/'
+  }
 };
 
 module.exports = config;

@@ -36,13 +36,15 @@ const {mochaMixin, saucelabsMixin, nycMixin} = require('./mixins/forTestRunner')
 program
   .version(require(path.resolve(__dirname, 'package.json')).version)
   .option('-c, --config <path>', 'Test config file path')
+  .option('--no-remote-server', 'Do NOT Run any testing on remote server')
   .option('--use-reporter', 'Use test reporter instead of console output for test results')
   .option('--add-coverage-report', 'Add coverage report along with tests')
+  .option('--in-chrome', 'Test with chrome')
+  .option('--in-ie', 'Test with ie')
+  .option('--in-firefox', 'Test with firefox')
+  .option('--in-safari', 'Test with safari')
+  .option('--in-all-browser', 'Test with all browser capabilities available')
   .parse(process.argv)
-
-// Get the config file
-const testConfig = require(program.config)
-const testDefaultConfig = require('./test.default.config')
 
 // Util functions
 /**
@@ -86,7 +88,7 @@ class TestRunner {
       warnLog('No test config file found. Using the default config')
     }
 
-    this.testConfig = Object.assign({}, testDefaultConfig, testConfig)
+    this.testConfig = Object.assign({}, require('./test.default.config'), testConfig)
 
     // Need to make sure some important properties are still available
     if (!this.testConfig.saucelabs.forCapabilities) {
@@ -94,25 +96,64 @@ class TestRunner {
     }
 
     // Add program arguments into testConfig
+    if (program.inChrome || program.inFirefox || program.inSafari || program.inIe || program.inAllBrowser) {
+      const originalCapabilities = this.testConfig.capabilities,
+            chromeConfig = Object.assign({ name: 'chrome' }, originalCapabilities.find((cap) => cap.name === 'chrome')),
+            firefoxConfig = Object.assign({ name: 'firefox' }, originalCapabilities.find((cap) => cap.name === 'firefox')),
+            safariConfig = Object.assign({ name: 'safari' }, originalCapabilities.find((cap) => cap.name === 'safari')),
+            ieConfig = Object.assign({ name: 'ie' }, originalCapabilities.find((cap) => cap.name === 'ie'))
+      
+      this.testConfig.capabilities = []
+
+      if (program.inAllBrowser) {
+        this.testConfig.capabilities = [
+          chromeConfig,
+          firefoxConfig,
+          safariConfig,
+          ieConfig
+        ]
+      }
+      else {
+        if (program.inChrome) {
+          this.testConfig.capabilities.push(chromeConfig)
+        }
+  
+        if (program.inFirefox) {
+          this.testConfig.capabilities.push(firefoxConfig)
+        }
+  
+        if (program.inSafari) {
+          this.testConfig.capabilities.push(safariConfig)
+        }
+  
+        if (program.inIe) {
+          this.testConfig.capabilities.push(ieConfig)
+        }
+      }
+    }
 
     // Overwrite the file paths to based on root directory
     if (!Array.isArray(this.testConfig.specs)) {
       this.testConfig.specs = [this.testConfig.specs]
     }
     this.testConfig.specs = this.testConfig.specs
-                          .map((spec) => this.getAbsPath(spec, this.testConfig.rootDir))
+                          .map((spec) => TestRunner.getAbsPath(spec, this.testConfig.rootDir))
     
     if (this.testConfig.testFramework.reporter
       && this.testConfig.testFramework.reporter.name === 'mocha-junit-reporter'
       && this.testConfig.testFramework.reporter.options 
       && this.testConfig.testFramework.reporter.options.mochaFile) {
-      this.testConfig.testFramework.reporter.options.mochaFile = this.getAbsPath(this.testConfig.testFramework.reporter.options.mochaFile, this.testConfig.rootDir)
+      this.testConfig.testFramework.reporter.options.mochaFile = TestRunner.getAbsPath(this.testConfig.testFramework.reporter.options.mochaFile, this.testConfig.rootDir)
     }
 
     if (this.testConfig.testFramework.coverage
       && this.testConfig.testFramework.coverage.reportDir) {
-      this.testConfig.testFramework.coverage.reportDir = this.getAbsPath(this.testConfig.testFramework.coverage.reportDir, this.testConfig.rootDir)
+      this.testConfig.testFramework.coverage.reportDir = TestRunner.getAbsPath(this.testConfig.testFramework.coverage.reportDir, this.testConfig.rootDir)
     }
+
+    this.testConfig.screenshot.baselineDir = TestRunner.getAbsPath(this.testConfig.screenshot.baselineDir, this.testConfig.rootDir)
+    this.testConfig.screenshot.diffDir = TestRunner.getAbsPath(this.testConfig.screenshot.diffDir, this.testConfig.rootDir)
+    this.testConfig.screenshot.screenshotDir = TestRunner.getAbsPath(this.testConfig.screenshot.screenshotDir, this.testConfig.rootDir)
 
     log('\n-------------------------')
     log('Execute test with config:')
@@ -126,6 +167,46 @@ class TestRunner {
   }
 
   /**
+   * Get the absolute path within this project
+   */
+  static getAbsPath (somePath, rootPath = process.cwd()) {
+    return path.resolve(rootPath, somePath)
+  }
+
+  /**
+   * returns a flatten list of globed files
+   *
+   * @param  {String[]} filenames  list of files to glob
+   * @return {String[]} list of files
+   */
+  static getFilePaths (patterns, omitWarnings = false) {
+    let files = []
+
+    if (typeof patterns === 'string') {
+        patterns = [patterns]
+    }
+
+    if (!Array.isArray(patterns)) {
+        throw new Error('specs or exclude property should be an array of strings')
+    }
+
+    for (let pattern of patterns) {
+        let filenames = glob.sync(pattern)
+
+        // filenames = filenames.filter(filename => FILE_EXTENSIONS.includes(path.extname(filename)))
+        filenames = filenames.map(filename => TestRunner.getAbsPath(filename))
+
+        if (filenames.length === 0 && !omitWarnings) {
+          warnLog('pattern', pattern, 'did not match any file')
+        }
+
+        files = files.concat(filenames)
+    }
+
+    return files
+  }
+
+  /**
    * Function that triggers test runner to execute test
    */
   async run () {
@@ -136,7 +217,7 @@ class TestRunner {
 
     // Run test in parallel and bound by maxInstance
     const capabilities = testConfig.capabilities
-    const specs = this.getFilePaths(testConfig.specs)
+    const specs = TestRunner.getFilePaths(testConfig.specs)
 
     if (capabilities.length === 0 || specs.length === 0) {
       // No browser or tests to test for. Do nothing.
@@ -157,16 +238,15 @@ class TestRunner {
     // Assuming we are using saucelabs.
     // TODO: considering other test environments platform
     const saucelabsCapabilities = testConfig.saucelabs.forCapabilities
-    if (program.saucelabs 
-      && saucelabsCapabilities.length
-      && capabilities.some((cap) => saucelabsCapabilities.includes(cap))) {
+    if (saucelabsCapabilities.length
+      && capabilities.some((cap) => saucelabsCapabilities.includes(cap.name))) {
       this.sauceConnectProcess = await this.createSauceConnectProcess()
     }
 
     for (let capability of capabilities) {
       // Start a child process for each capability
-      if (program.saucelabs && testConfig.saucelabs.forCapabilities.includes(capability.name)) {
-        infoLog(`Start test against ${capability.name} locally`)
+      if (program.remoteServer && testConfig.saucelabs.forCapabilities.includes(capability.name)) {
+        infoLog(`Start test against ${capability.name} remotely`)
         // This capability should run with saucelabs
         // When running on saucelabs, we are creating a session for each capability
         // with each spec, as long as we are within maxInstance limit.
@@ -176,7 +256,7 @@ class TestRunner {
         }
       }
       else {
-        infoLog(`\nStart test against ${capability.name} remotely`)
+        infoLog(`\nStart test against ${capability.name} locally`)
         // When running locally, we can only have the same capability
         // running for all specs due to the limitation of drivers
         this.startTestProcessThrottled(capability, testConfig.specs)
@@ -220,11 +300,14 @@ class TestRunner {
       TEST_CAPABILITY: capabilityArg,
       // With nyc package, it will look for .nyc_output by default and there is no need to change that
       // See https://istanbul.js.org/docs/advanced/coverage-object-report/
-      COVERAGE_REPORT_DIR: this.getAbsPath('.nyc_output/', this.testConfig.rootDir),
-      COVERAGE_FILENAME: 'functional.coverage.[hash].json'
+      COVERAGE_REPORT_DIR: TestRunner.getAbsPath('.nyc_output/', this.testConfig.rootDir),
+      COVERAGE_FILENAME: 'functional.coverage.[hash].json',
+      SCREENSHOT_BASELINE_DIR: this.testConfig.screenshot.baselineDir,
+      SCREENSHOT_DIFF_DIR: this.testConfig.screenshot.diffDir,
+      SCREENSHOT_DIR: this.testConfig.screenshot.screenshotDir
     }
 
-    if (program.saucelabs && this.testConfig.saucelabs.forCapabilities.includes(capability.name)) {
+    if (this.testConfig.saucelabs.forCapabilities.includes(capability.name)) {
       // We are testing with saucelabs
       Object.assign(testEnv, {
         USE_SAUCELABS: true,
@@ -260,46 +343,6 @@ class TestRunner {
     infoLog('\n-------------------------')
     infoLog(`Running test process [${testProcess.pid}]: ${testProcess.spawnargs.join(' ')}`)
     infoLog('-------------------------\n')
-  }
-
-  /**
-   * Get the absolute path within this project
-   */
-  getAbsPath (somePath, rootPath = process.cwd()) {
-    return path.resolve(rootPath, somePath)
-  }
-
-  /**
-   * returns a flatten list of globed files
-   *
-   * @param  {String[]} filenames  list of files to glob
-   * @return {String[]} list of files
-   */
-  getFilePaths (patterns, omitWarnings = false) {
-    let files = []
-
-    if (typeof patterns === 'string') {
-        patterns = [patterns]
-    }
-
-    if (!Array.isArray(patterns)) {
-        throw new Error('specs or exclude property should be an array of strings')
-    }
-
-    for (let pattern of patterns) {
-        let filenames = glob.sync(pattern)
-
-        // filenames = filenames.filter(filename => FILE_EXTENSIONS.includes(path.extname(filename)))
-        filenames = filenames.map(filename => this.getAbsPath(filename))
-
-        if (filenames.length === 0 && !omitWarnings) {
-          warnLog('pattern', pattern, 'did not match any file')
-        }
-
-        files = files.concat(filenames)
-    }
-
-    return files
   }
 
   /**
@@ -413,5 +456,5 @@ class TestRunner {
   }
 }
 
-const testRunner = new TestRunner(testConfig)
+const testRunner = new TestRunner(require(TestRunner.getAbsPath(program.config)))
 testRunner.run()
