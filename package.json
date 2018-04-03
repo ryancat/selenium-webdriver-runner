@@ -1,8 +1,11 @@
 {
-  "name": "selenium-webdriverjs-example",
-  "version": "0.0.1",
-  "description": "Selenium webdriverjs example",
+  "name": "swr",
+  "version": "0.1.0",
+  "description": "Selenium webdriverjs Runner with example",
   "main": "testRunner.js",
+  "bin": {
+    "swr": "testRunner.js"
+  },
   "scripts": {
     "build:todoApp": "cd ./demoApps/todoApp && webpack",
     "build:todoApp:prod": "cd ./demoApps/todoApp && webpack --env.prod",
