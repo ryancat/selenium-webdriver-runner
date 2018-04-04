@@ -62,7 +62,7 @@ const config = {
 
   // Config saucelabs connection
   saucelabs: {
-    forCapabilities: ['ie'],
+    forCapabilities: ['ie', 'safari'],
     user: process.env.SAUCELABS_USER,
     token: process.env.SAUCELABS_APITOKEN
   },

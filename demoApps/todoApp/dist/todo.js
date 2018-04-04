@@ -71,20 +71,272 @@
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_scss__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__app_scss__);
-var cov_282s28rzov=function(){var path='/Users/xin.chen/code/selenium-webdriverjs-example/demoApps/todoApp/src/app.js',hash='04448b5d4a9da38188fbc3652df5f5015878b023',Function=function(){}.constructor,global=new Function('return this')(),gcv='__coverage__',coverageData={path:'/Users/xin.chen/code/selenium-webdriverjs-example/demoApps/todoApp/src/app.js',statementMap:{'0':{start:{line:3,column:13},end:{line:29,column:1}},'1':{start:{line:10,column:21},end:{line:10,column:51}},'2':{start:{line:12,column:22},end:{line:12,column:61}},'3':{start:{line:19,column:4},end:{line:25,column:5}},'4':{start:{line:20,column:6},end:{line:22,column:7}},'5':{start:{line:21,column:8},end:{line:21,column:28}},'6':{start:{line:24,column:6},end:{line:24,column:48}},'7':{start:{line:27,column:4},end:{line:27,column:15}},'8':{start:{line:35,column:4},end:{line:35,column:30}},'9':{start:{line:38,column:4},end:{line:38,column:75}},'10':{start:{line:39,column:4},end:{line:39,column:77}},'11':{start:{line:40,column:4},end:{line:40,column:77}},'12':{start:{line:41,column:4},end:{line:41,column:77}},'13':{start:{line:42,column:4},end:{line:42,column:80}},'14':{start:{line:43,column:4},end:{line:43,column:70}},'15':{start:{line:44,column:4},end:{line:44,column:70}},'16':{start:{line:47,column:4},end:{line:47,column:23}},'17':{start:{line:48,column:4},end:{line:48,column:23}},'18':{start:{line:50,column:4},end:{line:50,column:33}},'19':{start:{line:51,column:4},end:{line:51,column:33}},'20':{start:{line:52,column:4},end:{line:52,column:31}},'21':{start:{line:53,column:4},end:{line:53,column:17}},'22':{start:{line:57,column:4},end:{line:59,column:6}},'23':{start:{line:58,column:6},end:{line:58,column:34}},'24':{start:{line:63,column:4},end:{line:65,column:6}},'25':{start:{line:64,column:6},end:{line:64,column:35}},'26':{start:{line:69,column:4},end:{line:69,column:79}},'27':{start:{line:70,column:4},end:{line:70,column:83}},'28':{start:{line:71,column:4},end:{line:71,column:80}},'29':{start:{line:72,column:4},end:{line:72,column:80}},'30':{start:{line:76,column:22},end:{line:76,column:45}},'31':{start:{line:78,column:4},end:{line:80,column:5}},'32':{start:{line:79,column:6},end:{line:79,column:12}},'33':{start:{line:82,column:4},end:{line:82,column:35}},'34':{start:{line:86,column:4},end:{line:86,column:31}},'35':{start:{line:91,column:17},end:{line:91,column:25}},'36':{start:{line:92,column:26},end:{line:92,column:78}},'37':{start:{line:94,column:4},end:{line:96,column:5}},'38':{start:{line:95,column:6},end:{line:95,column:12}},'39':{start:{line:98,column:19},end:{line:98,column:88}},'40':{start:{line:98,column:51},end:{line:98,column:87}},'41':{start:{line:100,column:4},end:{line:111,column:5}},'42':{start:{line:102,column:6},end:{line:102,column:29}},'43':{start:{line:104,column:9},end:{line:111,column:5}},'44':{start:{line:106,column:6},end:{line:106,column:25}},'45':{start:{line:108,column:9},end:{line:111,column:5}},'46':{start:{line:110,column:6},end:{line:110,column:31}},'47':{start:{line:116,column:17},end:{line:116,column:25}},'48':{start:{line:117,column:26},end:{line:117,column:78}},'49':{start:{line:119,column:4},end:{line:121,column:5}},'50':{start:{line:120,column:6},end:{line:120,column:12}},'51':{start:{line:123,column:19},end:{line:123,column:88}},'52':{start:{line:123,column:51},end:{line:123,column:87}},'53':{start:{line:125,column:4},end:{line:132,column:5}},'54':{start:{line:127,column:6},end:{line:127,column:29}},'55':{start:{line:129,column:9},end:{line:132,column:5}},'56':{start:{line:131,column:6},end:{line:131,column:27}},'57':{start:{line:136,column:4},end:{line:138,column:5}},'58':{start:{line:137,column:6},end:{line:137,column:12}},'59':{start:{line:141,column:4},end:{line:143,column:5}},'60':{start:{line:142,column:6},end:{line:142,column:31}},'61':{start:{line:145,column:4},end:{line:145,column:62}},'62':{start:{line:146,column:4},end:{line:146,column:47}},'63':{start:{line:147,column:4},end:{line:147,column:41}},'64':{start:{line:151,column:4},end:{line:153,column:5}},'65':{start:{line:152,column:6},end:{line:152,column:12}},'66':{start:{line:155,column:4},end:{line:155,column:42}},'67':{start:{line:156,column:4},end:{line:156,column:82}},'68':{start:{line:158,column:21},end:{line:158,column:75}},'69':{start:{line:159,column:4},end:{line:159,column:42}},'70':{start:{line:160,column:4},end:{line:160,column:46}},'71':{start:{line:161,column:4},end:{line:161,column:42}},'72':{start:{line:165,column:4},end:{line:167,column:5}},'73':{start:{line:166,column:6},end:{line:166,column:12}},'74':{start:{line:169,column:21},end:{line:169,column:100}},'75':{start:{line:170,column:4},end:{line:170,column:32}},'76':{start:{line:171,column:4},end:{line:171,column:45}},'77':{start:{line:175,column:4},end:{line:175,column:25}},'78':{start:{line:176,column:4},end:{line:176,column:40}},'79':{start:{line:180,column:4},end:{line:182,column:5}},'80':{start:{line:181,column:6},end:{line:181,column:12}},'81':{start:{line:184,column:4},end:{line:184,column:62}},'82':{start:{line:185,column:4},end:{line:185,column:47}},'83':{start:{line:189,column:19},end:{line:189,column:44}},'84':{start:{line:190,column:4},end:{line:190,column:33}},'85':{start:{line:191,column:4},end:{line:191,column:47}},'86':{start:{line:195,column:19},end:{line:195,column:44}},'87':{start:{line:196,column:4},end:{line:196,column:33}},'88':{start:{line:197,column:4},end:{line:197,column:47}},'89':{start:{line:201,column:4},end:{line:201,column:70}},'90':{start:{line:208,column:4},end:{line:208,column:43}},'91':{start:{line:209,column:4},end:{line:209,column:26}},'92':{start:{line:216,column:15},end:{line:216,column:43}},'93':{start:{line:218,column:4},end:{line:218,column:27}},'94':{start:{line:219,column:4},end:{line:219,column:41}},'95':{start:{line:220,column:4},end:{line:220,column:15}},'96':{start:{line:224,column:4},end:{line:224,column:35}},'97':{start:{line:228,column:4},end:{line:228,column:26}},'98':{start:{line:229,column:4},end:{line:229,column:49}},'99':{start:{line:235,column:4},end:{line:235,column:22}},'100':{start:{line:236,column:4},end:{line:236,column:43}},'101':{start:{line:240,column:4},end:{line:247,column:5}},'102':{start:{line:253,column:4},end:{line:253,column:22}},'103':{start:{line:254,column:4},end:{line:254,column:43}},'104':{start:{line:258,column:4},end:{line:264,column:5}},'105':{start:{line:269,column:0},end:{line:272,column:16}}},fnMap:{'0':{name:'(anonymous_0)',decl:{start:{line:10,column:14},end:{line:10,column:15}},loc:{start:{line:10,column:21},end:{line:10,column:51}},line:10},'1':{name:'(anonymous_1)',decl:{start:{line:12,column:14},end:{line:12,column:15}},loc:{start:{line:12,column:22},end:{line:12,column:61}},line:12},'2':{name:'(anonymous_2)',decl:{start:{line:18,column:15},end:{line:18,column:16}},loc:{start:{line:18,column:72},end:{line:28,column:3}},line:18},'3':{name:'(anonymous_3)',decl:{start:{line:33,column:2},end:{line:33,column:3}},loc:{start:{line:33,column:58},end:{line:54,column:3}},line:33},'4':{name:'(anonymous_4)',decl:{start:{line:56,column:2},end:{line:56,column:3}},loc:{start:{line:56,column:33},end:{line:60,column:3}},line:56},'5':{name:'(anonymous_5)',decl:{start:{line:57,column:22},end:{line:57,column:23}},loc:{start:{line:57,column:34},end:{line:59,column:5}},line:57},'6':{name:'(anonymous_6)',decl:{start:{line:62,column:2},end:{line:62,column:3}},loc:{start:{line:62,column:33},end:{line:66,column:3}},line:62},'7':{name:'(anonymous_7)',decl:{start:{line:63,column:22},end:{line:63,column:23}},loc:{start:{line:63,column:34},end:{line:65,column:5}},line:63},'8':{name:'(anonymous_8)',decl:{start:{line:68,column:2},end:{line:68,column:3}},loc:{start:{line:68,column:12},end:{line:73,column:3}},line:68},'9':{name:'(anonymous_9)',decl:{start:{line:75,column:2},end:{line:75,column:3}},loc:{start:{line:75,column:19},end:{line:83,column:3}},line:75},'10':{name:'(anonymous_10)',decl:{start:{line:85,column:2},end:{line:85,column:3}},loc:{start:{line:85,column:24},end:{line:87,column:3}},line:85},'11':{name:'(anonymous_11)',decl:{start:{line:89,column:2},end:{line:89,column:3}},loc:{start:{line:89,column:26},end:{line:112,column:3}},line:89},'12':{name:'(anonymous_12)',decl:{start:{line:98,column:39},end:{line:98,column:40}},loc:{start:{line:98,column:51},end:{line:98,column:87}},line:98},'13':{name:'(anonymous_13)',decl:{start:{line:114,column:2},end:{line:114,column:3}},loc:{start:{line:114,column:26},end:{line:133,column:3}},line:114},'14':{name:'(anonymous_14)',decl:{start:{line:123,column:39},end:{line:123,column:40}},loc:{start:{line:123,column:51},end:{line:123,column:87}},line:123},'15':{name:'(anonymous_15)',decl:{start:{line:135,column:2},end:{line:135,column:3}},loc:{start:{line:135,column:22},end:{line:148,column:3}},line:135},'16':{name:'(anonymous_16)',decl:{start:{line:150,column:2},end:{line:150,column:3}},loc:{start:{line:150,column:18},end:{line:162,column:3}},line:150},'17':{name:'(anonymous_17)',decl:{start:{line:164,column:2},end:{line:164,column:3}},loc:{start:{line:164,column:24},end:{line:172,column:3}},line:164},'18':{name:'(anonymous_18)',decl:{start:{line:174,column:2},end:{line:174,column:3}},loc:{start:{line:174,column:22},end:{line:177,column:3}},line:174},'19':{name:'(anonymous_19)',decl:{start:{line:179,column:2},end:{line:179,column:3}},loc:{start:{line:179,column:20},end:{line:186,column:3}},line:179},'20':{name:'(anonymous_20)',decl:{start:{line:188,column:2},end:{line:188,column:3}},loc:{start:{line:188,column:35},end:{line:192,column:3}},line:188},'21':{name:'(anonymous_21)',decl:{start:{line:194,column:2},end:{line:194,column:3}},loc:{start:{line:194,column:36},end:{line:198,column:3}},line:194},'22':{name:'(anonymous_22)',decl:{start:{line:200,column:2},end:{line:200,column:3}},loc:{start:{line:200,column:26},end:{line:202,column:3}},line:200},'23':{name:'(anonymous_23)',decl:{start:{line:207,column:2},end:{line:207,column:3}},loc:{start:{line:207,column:24},end:{line:210,column:3}},line:207},'24':{name:'(anonymous_24)',decl:{start:{line:215,column:2},end:{line:215,column:3}},loc:{start:{line:215,column:23},end:{line:221,column:3}},line:215},'25':{name:'(anonymous_25)',decl:{start:{line:223,column:2},end:{line:223,column:3}},loc:{start:{line:223,column:19},end:{line:225,column:3}},line:223},'26':{name:'(anonymous_26)',decl:{start:{line:227,column:2},end:{line:227,column:3}},loc:{start:{line:227,column:20},end:{line:230,column:3}},line:227},'27':{name:'(anonymous_27)',decl:{start:{line:234,column:2},end:{line:234,column:3}},loc:{start:{line:234,column:28},end:{line:237,column:3}},line:234},'28':{name:'(anonymous_28)',decl:{start:{line:239,column:2},end:{line:239,column:3}},loc:{start:{line:239,column:19},end:{line:248,column:3}},line:239},'29':{name:'(anonymous_29)',decl:{start:{line:252,column:2},end:{line:252,column:3}},loc:{start:{line:252,column:28},end:{line:255,column:3}},line:252},'30':{name:'(anonymous_30)',decl:{start:{line:257,column:2},end:{line:257,column:3}},loc:{start:{line:257,column:19},end:{line:265,column:3}},line:257}},branchMap:{'0':{loc:{start:{line:10,column:21},end:{line:10,column:51}},type:'binary-expr',locations:[{start:{line:10,column:21},end:{line:10,column:44}},{start:{line:10,column:48},end:{line:10,column:51}}],line:10},'1':{loc:{start:{line:18,column:41},end:{line:18,column:67}},type:'default-arg',locations:[{start:{line:18,column:54},end:{line:18,column:67}}],line:18},'2':{loc:{start:{line:19,column:11},end:{line:19,column:54}},type:'binary-expr',locations:[{start:{line:19,column:11},end:{line:19,column:23}},{start:{line:19,column:27},end:{line:19,column:54}}],line:19},'3':{loc:{start:{line:20,column:6},end:{line:22,column:7}},type:'if',locations:[{start:{line:20,column:6},end:{line:22,column:7}},{start:{line:20,column:6},end:{line:22,column:7}}],line:20},'4':{loc:{start:{line:33,column:26},end:{line:33,column:40}},type:'default-arg',locations:[{start:{line:33,column:38},end:{line:33,column:40}}],line:33},'5':{loc:{start:{line:33,column:42},end:{line:33,column:56}},type:'default-arg',locations:[{start:{line:33,column:54},end:{line:33,column:56}}],line:33},'6':{loc:{start:{line:56,column:17},end:{line:56,column:31}},type:'default-arg',locations:[{start:{line:56,column:29},end:{line:56,column:31}}],line:56},'7':{loc:{start:{line:62,column:17},end:{line:62,column:31}},type:'default-arg',locations:[{start:{line:62,column:29},end:{line:62,column:31}}],line:62},'8':{loc:{start:{line:78,column:4},end:{line:80,column:5}},type:'if',locations:[{start:{line:78,column:4},end:{line:80,column:5}},{start:{line:78,column:4},end:{line:80,column:5}}],line:78},'9':{loc:{start:{line:94,column:4},end:{line:96,column:5}},type:'if',locations:[{start:{line:94,column:4},end:{line:96,column:5}},{start:{line:94,column:4},end:{line:96,column:5}}],line:94},'10':{loc:{start:{line:100,column:4},end:{line:111,column:5}},type:'if',locations:[{start:{line:100,column:4},end:{line:111,column:5}},{start:{line:100,column:4},end:{line:111,column:5}}],line:100},'11':{loc:{start:{line:104,column:9},end:{line:111,column:5}},type:'if',locations:[{start:{line:104,column:9},end:{line:111,column:5}},{start:{line:104,column:9},end:{line:111,column:5}}],line:104},'12':{loc:{start:{line:108,column:9},end:{line:111,column:5}},type:'if',locations:[{start:{line:108,column:9},end:{line:111,column:5}},{start:{line:108,column:9},end:{line:111,column:5}}],line:108},'13':{loc:{start:{line:119,column:4},end:{line:121,column:5}},type:'if',locations:[{start:{line:119,column:4},end:{line:121,column:5}},{start:{line:119,column:4},end:{line:121,column:5}}],line:119},'14':{loc:{start:{line:125,column:4},end:{line:132,column:5}},type:'if',locations:[{start:{line:125,column:4},end:{line:132,column:5}},{start:{line:125,column:4},end:{line:132,column:5}}],line:125},'15':{loc:{start:{line:129,column:9},end:{line:132,column:5}},type:'if',locations:[{start:{line:129,column:9},end:{line:132,column:5}},{start:{line:129,column:9},end:{line:132,column:5}}],line:129},'16':{loc:{start:{line:136,column:4},end:{line:138,column:5}},type:'if',locations:[{start:{line:136,column:4},end:{line:138,column:5}},{start:{line:136,column:4},end:{line:138,column:5}}],line:136},'17':{loc:{start:{line:141,column:4},end:{line:143,column:5}},type:'if',locations:[{start:{line:141,column:4},end:{line:143,column:5}},{start:{line:141,column:4},end:{line:143,column:5}}],line:141},'18':{loc:{start:{line:151,column:4},end:{line:153,column:5}},type:'if',locations:[{start:{line:151,column:4},end:{line:153,column:5}},{start:{line:151,column:4},end:{line:153,column:5}}],line:151},'19':{loc:{start:{line:165,column:4},end:{line:167,column:5}},type:'if',locations:[{start:{line:165,column:4},end:{line:167,column:5}},{start:{line:165,column:4},end:{line:167,column:5}}],line:165},'20':{loc:{start:{line:169,column:21},end:{line:169,column:100}},type:'binary-expr',locations:[{start:{line:169,column:21},end:{line:169,column:80}},{start:{line:169,column:84},end:{line:169,column:100}}],line:169},'21':{loc:{start:{line:180,column:4},end:{line:182,column:5}},type:'if',locations:[{start:{line:180,column:4},end:{line:182,column:5}},{start:{line:180,column:4},end:{line:182,column:5}}],line:180},'22':{loc:{start:{line:188,column:17},end:{line:188,column:33}},type:'default-arg',locations:[{start:{line:188,column:31},end:{line:188,column:33}}],line:188},'23':{loc:{start:{line:194,column:18},end:{line:194,column:34}},type:'default-arg',locations:[{start:{line:194,column:32},end:{line:194,column:34}}],line:194}},s:{'0':0,'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'11':0,'12':0,'13':0,'14':0,'15':0,'16':0,'17':0,'18':0,'19':0,'20':0,'21':0,'22':0,'23':0,'24':0,'25':0,'26':0,'27':0,'28':0,'29':0,'30':0,'31':0,'32':0,'33':0,'34':0,'35':0,'36':0,'37':0,'38':0,'39':0,'40':0,'41':0,'42':0,'43':0,'44':0,'45':0,'46':0,'47':0,'48':0,'49':0,'50':0,'51':0,'52':0,'53':0,'54':0,'55':0,'56':0,'57':0,'58':0,'59':0,'60':0,'61':0,'62':0,'63':0,'64':0,'65':0,'66':0,'67':0,'68':0,'69':0,'70':0,'71':0,'72':0,'73':0,'74':0,'75':0,'76':0,'77':0,'78':0,'79':0,'80':0,'81':0,'82':0,'83':0,'84':0,'85':0,'86':0,'87':0,'88':0,'89':0,'90':0,'91':0,'92':0,'93':0,'94':0,'95':0,'96':0,'97':0,'98':0,'99':0,'100':0,'101':0,'102':0,'103':0,'104':0,'105':0},f:{'0':0,'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'11':0,'12':0,'13':0,'14':0,'15':0,'16':0,'17':0,'18':0,'19':0,'20':0,'21':0,'22':0,'23':0,'24':0,'25':0,'26':0,'27':0,'28':0,'29':0,'30':0},b:{'0':[0,0],'1':[0],'2':[0,0],'3':[0,0],'4':[0],'5':[0],'6':[0],'7':[0],'8':[0,0],'9':[0,0],'10':[0,0],'11':[0,0],'12':[0,0],'13':[0,0],'14':[0,0],'15':[0,0],'16':[0,0],'17':[0,0],'18':[0,0],'19':[0,0],'20':[0,0],'21':[0,0],'22':[0],'23':[0]},_coverageSchema:'332fd63041d2c1bcb487cc26dd0d5f7d97098a6c'},coverage=global[gcv]||(global[gcv]={});if(coverage[path]&&coverage[path].hash===hash){return coverage[path];}coverageData.hash=hash;return coverage[path]=coverageData;}();const Util=(cov_282s28rzov.s[0]++,{tagsToReplace:{'&':'&amp;','<':'&lt;','>':'&gt;'},replaceTag:tag=>{cov_282s28rzov.f[0]++;cov_282s28rzov.s[1]++;return(cov_282s28rzov.b[0][0]++,Util.tagsToReplace[tag])||(cov_282s28rzov.b[0][1]++,tag);},escapeHtml:text=>{cov_282s28rzov.f[1]++;cov_282s28rzov.s[2]++;return text.replace(/[&<>]/g,Util.replaceTag);},findNearest:(startElement,className,endElement=(cov_282s28rzov.b[1][0]++,document.body))=>{cov_282s28rzov.f[2]++;cov_282s28rzov.s[3]++;while((cov_282s28rzov.b[2][0]++,startElement)&&(cov_282s28rzov.b[2][1]++,startElement!==endElement)){cov_282s28rzov.s[4]++;if(startElement.classList.contains(className)){cov_282s28rzov.b[3][0]++;cov_282s28rzov.s[5]++;return startElement;}else{cov_282s28rzov.b[3][1]++;}cov_282s28rzov.s[6]++;startElement=startElement.parentElement;}cov_282s28rzov.s[7]++;return null;}});class App{constructor(container,todoItems=(cov_282s28rzov.b[4][0]++,[]),doneItems=(cov_282s28rzov.b[5][0]++,[])){cov_282s28rzov.f[3]++;cov_282s28rzov.s[8]++;this.container=container;cov_282s28rzov.s[9]++;this.newTaskSection=this.container.querySelector('.new-task-section');cov_282s28rzov.s[10]++;this.todoTaskSection=this.container.querySelector('.todo-task-section');cov_282s28rzov.s[11]++;this.doneTaskSection=this.container.querySelector('.done-task-section');cov_282s28rzov.s[12]++;this.addTaskInput=this.newTaskSection.querySelector('input.task-input');cov_282s28rzov.s[13]++;this.addTaskButton=this.newTaskSection.querySelector('button.task-button');cov_282s28rzov.s[14]++;this.todoList=this.todoTaskSection.querySelector('ul.todo-list');cov_282s28rzov.s[15]++;this.doneList=this.doneTaskSection.querySelector('ul.done-list');cov_282s28rzov.s[16]++;this.todoItems=[];cov_282s28rzov.s[17]++;this.doneItems=[];cov_282s28rzov.s[18]++;this.initTodoItems(todoItems);cov_282s28rzov.s[19]++;this.initDoneItems(doneItems);cov_282s28rzov.s[20]++;this.refreshAddTaskButton();cov_282s28rzov.s[21]++;this.listen();}initTodoItems(todoItems=(cov_282s28rzov.b[6][0]++,[])){cov_282s28rzov.f[4]++;cov_282s28rzov.s[22]++;todoItems.forEach(todoItem=>{cov_282s28rzov.f[5]++;cov_282s28rzov.s[23]++;this.createNewTask(todoItem);});}initDoneItems(doneItems=(cov_282s28rzov.b[7][0]++,[])){cov_282s28rzov.f[6]++;cov_282s28rzov.s[24]++;doneItems.forEach(doneItem=>{cov_282s28rzov.f[7]++;cov_282s28rzov.s[25]++;this.createDoneTask(doneItem);});}listen(){cov_282s28rzov.f[8]++;cov_282s28rzov.s[26]++;this.addTaskButton.addEventListener('click',this.handleAddTask.bind(this));cov_282s28rzov.s[27]++;this.addTaskInput.addEventListener('keyup',this.handleAddTaskKeyup.bind(this));cov_282s28rzov.s[28]++;this.todoList.addEventListener('click',this.handleTodoListClick.bind(this));cov_282s28rzov.s[29]++;this.doneList.addEventListener('click',this.handleDoneListClick.bind(this));}handleAddTask(){cov_282s28rzov.f[9]++;let todoContent=(cov_282s28rzov.s[30]++,this.addTaskInput.value);cov_282s28rzov.s[31]++;if(todoContent.length===0){cov_282s28rzov.b[8][0]++;cov_282s28rzov.s[32]++;return;}else{cov_282s28rzov.b[8][1]++;}cov_282s28rzov.s[33]++;this.createNewTask(todoContent);}handleAddTaskKeyup(){cov_282s28rzov.f[10]++;cov_282s28rzov.s[34]++;this.refreshAddTaskButton();}handleTodoListClick(e){cov_282s28rzov.f[11]++;let target=(cov_282s28rzov.s[35]++,e.target),todoItemElement=(cov_282s28rzov.s[36]++,Util.findNearest(target,'todo-item',this.todoList));cov_282s28rzov.s[37]++;if(!todoItemElement){cov_282s28rzov.b[9][0]++;cov_282s28rzov.s[38]++;return;}else{cov_282s28rzov.b[9][1]++;}let todoItem=(cov_282s28rzov.s[39]++,this.todoItems.find(todoItem=>{cov_282s28rzov.f[12]++;cov_282s28rzov.s[40]++;return todoItem.element===todoItemElement;}));cov_282s28rzov.s[41]++;if(target.classList.contains('to-done')){cov_282s28rzov.b[10][0]++;cov_282s28rzov.s[42]++;this.markDone(todoItem);}else{cov_282s28rzov.b[10][1]++;cov_282s28rzov.s[43]++;if(target.classList.contains('to-edit')){cov_282s28rzov.b[11][0]++;cov_282s28rzov.s[44]++;this.edit(todoItem);}else{cov_282s28rzov.b[11][1]++;cov_282s28rzov.s[45]++;if(target.classList.contains('to-edit-finish')){cov_282s28rzov.b[12][0]++;cov_282s28rzov.s[46]++;this.finishEdit(todoItem);}else{cov_282s28rzov.b[12][1]++;}}}}handleDoneListClick(e){cov_282s28rzov.f[13]++;let target=(cov_282s28rzov.s[47]++,e.target),doneItemElement=(cov_282s28rzov.s[48]++,Util.findNearest(target,'done-item',this.doneList));cov_282s28rzov.s[49]++;if(!doneItemElement){cov_282s28rzov.b[13][0]++;cov_282s28rzov.s[50]++;return;}else{cov_282s28rzov.b[13][1]++;}let doneItem=(cov_282s28rzov.s[51]++,this.doneItems.find(doneItem=>{cov_282s28rzov.f[14]++;cov_282s28rzov.s[52]++;return doneItem.element===doneItemElement;}));cov_282s28rzov.s[53]++;if(target.classList.contains('to-undo')){cov_282s28rzov.b[14][0]++;cov_282s28rzov.s[54]++;this.markTodo(doneItem);}else{cov_282s28rzov.b[14][1]++;cov_282s28rzov.s[55]++;if(target.classList.contains('to-remove')){cov_282s28rzov.b[15][0]++;cov_282s28rzov.s[56]++;this.remove(doneItem);}else{cov_282s28rzov.b[15][1]++;}}}markDone(todoItem){cov_282s28rzov.f[15]++;cov_282s28rzov.s[57]++;if(!todoItem){cov_282s28rzov.b[16][0]++;cov_282s28rzov.s[58]++;return;}else{cov_282s28rzov.b[16][1]++;}cov_282s28rzov.s[59]++;if(todoItem.element.classList.contains('edit')){cov_282s28rzov.b[17][0]++;cov_282s28rzov.s[60]++;this.finishEdit(todoItem);}else{cov_282s28rzov.b[17][1]++;}cov_282s28rzov.s[61]++;this.todoItems.splice(this.todoItems.indexOf(todoItem),1);cov_282s28rzov.s[62]++;this.todoList.removeChild(todoItem.element);cov_282s28rzov.s[63]++;this.createDoneTask(todoItem.content);}edit(todoItem){cov_282s28rzov.f[16]++;cov_282s28rzov.s[64]++;if(!todoItem){cov_282s28rzov.b[18][0]++;cov_282s28rzov.s[65]++;return;}else{cov_282s28rzov.b[18][1]++;}cov_282s28rzov.s[66]++;todoItem.element.classList.add('edit');cov_282s28rzov.s[67]++;todoItem.element.querySelector('.task-content input').value=todoItem.content;let editButton=(cov_282s28rzov.s[68]++,todoItem.element.querySelector('.task-button.to-edit'));cov_282s28rzov.s[69]++;editButton.classList.remove('to-edit');cov_282s28rzov.s[70]++;editButton.classList.add('to-edit-finish');cov_282s28rzov.s[71]++;editButton.textContent='Finish edit';}finishEdit(todoItem){cov_282s28rzov.f[17]++;cov_282s28rzov.s[72]++;if(!todoItem){cov_282s28rzov.b[19][0]++;cov_282s28rzov.s[73]++;return;}else{cov_282s28rzov.b[19][1]++;}let newContent=(cov_282s28rzov.s[74]++,(cov_282s28rzov.b[20][0]++,todoItem.element.querySelector('.task-content input').value)||(cov_282s28rzov.b[20][1]++,todoItem.content));cov_282s28rzov.s[75]++;todoItem.refresh(newContent);cov_282s28rzov.s[76]++;todoItem.element.classList.remove('edit');}markTodo(doneItem){cov_282s28rzov.f[18]++;cov_282s28rzov.s[77]++;this.remove(doneItem);cov_282s28rzov.s[78]++;this.createNewTask(doneItem.content);}remove(doneItem){cov_282s28rzov.f[19]++;cov_282s28rzov.s[79]++;if(!doneItem){cov_282s28rzov.b[21][0]++;cov_282s28rzov.s[80]++;return;}else{cov_282s28rzov.b[21][1]++;}cov_282s28rzov.s[81]++;this.doneItems.splice(this.doneItems.indexOf(doneItem),1);cov_282s28rzov.s[82]++;this.doneList.removeChild(doneItem.element);}createNewTask(todoContent=(cov_282s28rzov.b[22][0]++,'')){cov_282s28rzov.f[20]++;let todoItem=(cov_282s28rzov.s[83]++,new ToDoItem(todoContent));cov_282s28rzov.s[84]++;this.todoItems.push(todoItem);cov_282s28rzov.s[85]++;this.todoList.appendChild(todoItem.element);}createDoneTask(doneContent=(cov_282s28rzov.b[23][0]++,'')){cov_282s28rzov.f[21]++;let doneItem=(cov_282s28rzov.s[86]++,new DoneItem(doneContent));cov_282s28rzov.s[87]++;this.doneItems.push(doneItem);cov_282s28rzov.s[88]++;this.doneList.appendChild(doneItem.element);}refreshAddTaskButton(){cov_282s28rzov.f[22]++;cov_282s28rzov.s[89]++;this.addTaskButton.disabled=this.addTaskInput.value.length===0;}}class Item{constructor(content){cov_282s28rzov.f[23]++;cov_282s28rzov.s[90]++;this.element=this.createItem(content);cov_282s28rzov.s[91]++;this.content=content;}createItem(content){cov_282s28rzov.f[24]++;let item=(cov_282s28rzov.s[92]++,document.createElement('li'));cov_282s28rzov.s[93]++;item.className='item';cov_282s28rzov.s[94]++;item.innerHTML=this.render(content);cov_282s28rzov.s[95]++;return item;}render(content){cov_282s28rzov.f[25]++;cov_282s28rzov.s[96]++;return Util.escapeHtml(content);}refresh(content){cov_282s28rzov.f[26]++;cov_282s28rzov.s[97]++;this.content=content;cov_282s28rzov.s[98]++;this.element.innerHTML=this.render(content);}}class ToDoItem extends(Item){constructor(todoContent){cov_282s28rzov.f[27]++;cov_282s28rzov.s[99]++;super(todoContent);cov_282s28rzov.s[100]++;this.element.classList.add('todo-item');}render(content){cov_282s28rzov.f[28]++;cov_282s28rzov.s[101]++;return`
+
+
+const Util = {
+  tagsToReplace: {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;'
+  },
+
+  replaceTag: tag => Util.tagsToReplace[tag] || tag,
+
+  escapeHtml: text => text.replace(/[&<>]/g, Util.replaceTag),
+
+  /**
+   * Find the nearest element that has given className,
+   * start from startElement, and end by endElement
+   */
+  findNearest: (startElement, className, endElement = document.body) => {
+    while (startElement && startElement !== endElement) {
+      if (startElement.classList.contains(className)) {
+        return startElement;
+      }
+
+      startElement = startElement.parentElement;
+    }
+
+    return null;
+  }
+};
+
+class App {
+
+  constructor(container, todoItems = [], doneItems = []) {
+    // Props
+    this.container = container;
+
+    // DOM element
+    this.newTaskSection = this.container.querySelector('.new-task-section');
+    this.todoTaskSection = this.container.querySelector('.todo-task-section');
+    this.doneTaskSection = this.container.querySelector('.done-task-section');
+    this.addTaskInput = this.newTaskSection.querySelector('input.task-input');
+    this.addTaskButton = this.newTaskSection.querySelector('button.task-button');
+    this.todoList = this.todoTaskSection.querySelector('ul.todo-list');
+    this.doneList = this.doneTaskSection.querySelector('ul.done-list');
+
+    // State
+    this.todoItems = [];
+    this.doneItems = [];
+
+    this.initTodoItems(todoItems);
+    this.initDoneItems(doneItems);
+    this.refreshAddTaskButton();
+    this.listen();
+  }
+
+  initTodoItems(todoItems = []) {
+    todoItems.forEach(todoItem => {
+      this.createNewTask(todoItem);
+    });
+  }
+
+  initDoneItems(doneItems = []) {
+    doneItems.forEach(doneItem => {
+      this.createDoneTask(doneItem);
+    });
+  }
+
+  listen() {
+    this.addTaskButton.addEventListener('click', this.handleAddTask.bind(this));
+    this.addTaskInput.addEventListener('keyup', this.handleAddTaskKeyup.bind(this));
+    this.todoList.addEventListener('click', this.handleTodoListClick.bind(this));
+    this.doneList.addEventListener('click', this.handleDoneListClick.bind(this));
+  }
+
+  handleAddTask() {
+    let todoContent = this.addTaskInput.value;
+
+    if (todoContent.length === 0) {
+      return;
+    }
+
+    this.createNewTask(todoContent);
+  }
+
+  handleAddTaskKeyup() {
+    this.refreshAddTaskButton();
+  }
+
+  handleTodoListClick(e) {
+    // Find the targee todo item
+    let target = e.target,
+        todoItemElement = Util.findNearest(target, 'todo-item', this.todoList);
+
+    if (!todoItemElement) {
+      return;
+    }
+
+    let todoItem = this.todoItems.find(todoItem => todoItem.element === todoItemElement);
+
+    if (target.classList.contains('to-done')) {
+      // Click on done button
+      this.markDone(todoItem);
+    } else if (target.classList.contains('to-edit')) {
+      // Click on edit button
+      this.edit(todoItem);
+    } else if (target.classList.contains('to-edit-finish')) {
+      // Click on finish edit button
+      this.finishEdit(todoItem);
+    }
+  }
+
+  handleDoneListClick(e) {
+    // Find the targee todo item
+    let target = e.target,
+        doneItemElement = Util.findNearest(target, 'done-item', this.doneList);
+
+    if (!doneItemElement) {
+      return;
+    }
+
+    let doneItem = this.doneItems.find(doneItem => doneItem.element === doneItemElement);
+
+    if (target.classList.contains('to-undo')) {
+      // Click on done button
+      this.markTodo(doneItem);
+    } else if (target.classList.contains('to-remove')) {
+      // Click on edit button
+      this.remove(doneItem);
+    }
+  }
+
+  markDone(todoItem) {
+    if (!todoItem) {
+      return;
+    }
+
+    // If in the middle of editing, save it first
+    if (todoItem.element.classList.contains('edit')) {
+      this.finishEdit(todoItem);
+    }
+
+    this.todoItems.splice(this.todoItems.indexOf(todoItem), 1);
+    this.todoList.removeChild(todoItem.element);
+    this.createDoneTask(todoItem.content);
+  }
+
+  edit(todoItem) {
+    if (!todoItem) {
+      return;
+    }
+
+    todoItem.element.classList.add('edit');
+    todoItem.element.querySelector('.task-content input').value = todoItem.content;
+
+    let editButton = todoItem.element.querySelector('.task-button.to-edit');
+    editButton.classList.remove('to-edit');
+    editButton.classList.add('to-edit-finish');
+    editButton.textContent = 'Finish edit';
+  }
+
+  finishEdit(todoItem) {
+    if (!todoItem) {
+      return;
+    }
+
+    let newContent = todoItem.element.querySelector('.task-content input').value || todoItem.content;
+    todoItem.refresh(newContent);
+    todoItem.element.classList.remove('edit');
+  }
+
+  markTodo(doneItem) {
+    this.remove(doneItem);
+    this.createNewTask(doneItem.content);
+  }
+
+  remove(doneItem) {
+    if (!doneItem) {
+      return;
+    }
+
+    this.doneItems.splice(this.doneItems.indexOf(doneItem), 1);
+    this.doneList.removeChild(doneItem.element);
+  }
+
+  createNewTask(todoContent = '') {
+    let todoItem = new ToDoItem(todoContent);
+    this.todoItems.push(todoItem);
+    this.todoList.appendChild(todoItem.element);
+  }
+
+  createDoneTask(doneContent = '') {
+    let doneItem = new DoneItem(doneContent);
+    this.doneItems.push(doneItem);
+    this.doneList.appendChild(doneItem.element);
+  }
+
+  refreshAddTaskButton() {
+    this.addTaskButton.disabled = this.addTaskInput.value.length === 0;
+  }
+
+}
+
+class Item {
+  constructor(content) {
+    this.element = this.createItem(content);
+    this.content = content;
+  }
+
+  /**
+   * Create done item element
+   */
+  createItem(content) {
+    let item = document.createElement('li');
+
+    item.className = 'item';
+    item.innerHTML = this.render(content);
+    return item;
+  }
+
+  render(content) {
+    return Util.escapeHtml(content);
+  }
+
+  refresh(content) {
+    this.content = content;
+    this.element.innerHTML = this.render(content);
+  }
+}
+
+class ToDoItem extends Item {
+  constructor(todoContent) {
+    super(todoContent);
+    this.element.classList.add('todo-item');
+  }
+
+  render(content) {
+    return `
       <div class="task-content longest">
         <span>${Util.escapeHtml(content)}</span>
         <input type="text" />
       </div>
       <button class="task-button to-edit">Edit</button>
       <button class="task-button correct to-done">Done</button>
-    `;}}class DoneItem extends(Item){constructor(doneContent){cov_282s28rzov.f[29]++;cov_282s28rzov.s[102]++;super(doneContent);cov_282s28rzov.s[103]++;this.element.classList.add('done-item');}render(content){cov_282s28rzov.f[30]++;cov_282s28rzov.s[104]++;return`
+    `;
+  }
+}
+
+class DoneItem extends Item {
+  constructor(doneContent) {
+    super(doneContent);
+    this.element.classList.add('done-item');
+  }
+
+  render(content) {
+    return `
       <div class="task-content longest">
         <span>${Util.escapeHtml(content)}</span>
       </div>
       <button class="task-button to-undo">Undo</button>
       <button class="task-button correct to-remove">Remove</button>
-    `;}}cov_282s28rzov.s[105]++;new App(document.querySelector('.todoapp-container'),['Buy Milk','Go to gym'],['Buy Bread']);
+    `;
+  }
+}
+
+// Bootstrap application
+new App(document.querySelector('.todoapp-container'), ['Buy Milk', 'Go to gym'], ['Buy Bread']);
 
 /***/ }),
 /* 1 */
