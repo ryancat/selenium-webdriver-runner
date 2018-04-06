@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/ryancat/selenium-webdriver-runner.svg?branch=master)](https://travis-ci.org/ryancat/selenium-webdriver-runner)
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/selenium-webdriver-runner.svg)](https://saucelabs.com/u/selenium-webdriver-runner)
+[![Sauce Test Status](https://saucelabs.com/buildstatus/selenium-webdriver-runner.svg)](https://saucelabs.com/u/selenium-webdriver-runner.svg)
+
+[![Sauce Test Matrix](https://saucelabs.com/browser-matrix/selenium-webdriver-runner.svg)](https://saucelabs.com/u/selenium-webdriver-runner)
 
 ## What is this
 This is a demo on how to setup selenium tests with the official [selenium-webdriver](https://github.com/SeleniumHQ/selenium) library from scratch. The package also provide an nodejs executable runner for those who just want to try it out. This example includes the following:
