@@ -1,7 +1,7 @@
 # Selenium Webdriver Runner
 
 ## What is this
-This is a demo on how to setup selenium tests with it's webdriverjs library from scratch. The package also provide an nodejs executable runner for those who just want to try it out. This example includes the following:
+This is a demo on how to setup selenium tests with the official [selenium-webdriver](https://github.com/SeleniumHQ/selenium) library from scratch. The package also provide an nodejs executable runner for those who just want to try it out. This example includes the following:
 
 - A Todo app as the application to test for (more demo may be added in the future)
 - A config file to define your tests properties
@@ -18,6 +18,21 @@ Despite the good parts, the problem with using these frameworks, say [webdriveri
 
 I want to show you it's actually not that hard to create a test runner that works well, with just a few dependencies besides [selenium-webdriver](https://github.com/SeleniumHQ/selenium), and highly customizable to fit your own needs.
 
+
+## How to use
+For fork and customize the code, checkout the [test.default.config.js](test.default.config.js) for more details on available configurations. In the todo app, you can create your own [test.config.js](demoApps/todoApp/test.config.js) to overwrite the default one. 
+
+For direct download and use the test runner, simply run
+
+```
+npm install selenium-webdriver-runner
+```
+
+And you will be able to run the test by
+
+```
+selenium-webdriver-runner --config [your config file path]
+```
 
 ## Todo list
 - Hook up with saucelabs CI tool
