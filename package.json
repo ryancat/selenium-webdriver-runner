@@ -18,7 +18,7 @@
     "test:todoApp:coverage": "node testRunner --config ./demoApps/todoApp/test.config.js --add-coverage-report",
     "test:reports": "npm run test:todoApp:reports",
     "test:coverage": "npm run test:todoApp:coverage",
-    "test": "npm run test:todoApp",
+    "test": "npm run build:coverage && npm run test:coverage",
     "install:todoApp": "cd ./demoApps/todoApp && npm install",
     "postinstall": "npm run install:todoApp"
   },

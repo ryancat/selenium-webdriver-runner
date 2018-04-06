@@ -1,5 +1,7 @@
 # Selenium Webdriver Runner
 
+[![Build Status](https://travis-ci.org/ryancat/selenium-webdriver-runner.svg?branch=master)](https://travis-ci.org/ryancat/selenium-webdriver-runner)
+
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/selenium-webdriver-runner.svg)](https://saucelabs.com/u/selenium-webdriver-runner)
 
 ## What is this
