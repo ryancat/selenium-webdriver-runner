@@ -1,14 +1,14 @@
-# Selenium Webdriverjs Example
+# Selenium Webdriver Runner
 
 ## What is this
-This repo is a demo on how to setup selenium tests with it's webdriverjs library from scratch. The example includes the following:
+This is a demo on how to setup selenium tests with it's webdriverjs library from scratch. The package also provide an nodejs executable runner for those who just want to try it out. This example includes the following:
 
-- A Todo example as the application to test for
+- A Todo app as the application to test for (more demo may be added in the future)
 - A config file to define your tests properties
 - A test runner which runs your test against the config file
 - Running test in parallel, locally and remotely (with saucelabs)
-- A basic page object
-- A set of plugins to help make writing tests easier (for example, taking screenshots)
+- page object setup for the examples
+- A set of mixins that extends the test runner and webdriver features, allow you to run visual regression tests by screenshots, using mocha to write tests, pipe driver instructions, connect with saucelabs, generate coverage report, etc.
 
 
 ## Why I am creating this
