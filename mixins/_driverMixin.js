@@ -126,7 +126,11 @@ module.exports = {
       platform: capability.platform || undefined,
       version: capability.version || undefined,
       username: sauceUsername,
-      accessKey: sauceToken
+      accessKey: sauceToken,
+      // More options to make test run less flaky
+      'safari.options': {
+        technologyPreview: true
+      }
     })
     .usingServer("http://" + sauceUsername + ":" + sauceToken + "@ondemand.saucelabs.com:80/wd/hub")
     .build()
