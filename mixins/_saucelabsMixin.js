@@ -17,7 +17,8 @@ module.exports = {
     await new Promise((resolve, reject) => {
       sauceConnectLauncher({
         username: this.testConfig.saucelabs.user,
-        accessKey: this.testConfig.saucelabs.token
+        accessKey: this.testConfig.saucelabs.token,
+        verbose: true
       }, async (err, sauceConnectProcess) => {
         if (err) {
           errorLog(err.message);
