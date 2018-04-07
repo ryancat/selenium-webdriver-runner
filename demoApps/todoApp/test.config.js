@@ -56,13 +56,14 @@ const config = {
   capabilities: [
     { name: 'chrome', /* version: '65', platform: 'MAC' */ },
     { name: 'firefox', /* version: '59', platform: 'MAC' */ },
-    { name: 'safari' },
-    // { name: 'ie' }
+    // Safari requires version to be set
+    { name: 'safari', version: 10, /* platform: 'MAC' */ },
+    // { name: 'ie', /* version: '11', platform: 'WINDOWS' */ }
   ],
 
   // Config saucelabs connection
   saucelabs: {
-    forCapabilities: ['chrome', 'firefox', /*'ie', */'safari'],
+    forCapabilities: ['chrome', 'firefox', 'ie', 'safari'],
     user: process.env.SAUCELABS_USER,
     token: process.env.SAUCELABS_APITOKEN
   },
