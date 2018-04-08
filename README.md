@@ -39,4 +39,4 @@ selenium-webdriver-runner --config [your config file path]
 ```
 
 ## Todo list
-- Hook up with saucelabs CI tool
+- Documentation
