@@ -58,7 +58,7 @@ const config = {
     { name: 'firefox', /* version: '59', platform: 'MAC' */ },
     // Safari requires version to be set
     { name: 'safari', version: 10, /* platform: 'MAC' */ },
-    // { name: 'ie', /* version: '11', platform: 'WINDOWS' */ }
+    { name: 'ie', /* version: '11', platform: 'WINDOWS' */ }
   ],
 
   // Config saucelabs connection

@@ -14,15 +14,16 @@ if (COVERAGE_MODE) {
     },
     module: {
       rules: [{
+      //   test: /\.js$/,
+      //   use: {
+      //     loader: 'istanbul-instrumenter-loader'
+      //   },
+      //   // TODO: enforce is suggested but I don't see why
+      //   enforce: 'post',
+      //   exclude: /node_modules/
+      // }, {
         test: /\.js$/,
-        use: {
-          loader: 'istanbul-instrumenter-loader',
-          options: {
-            esModules: true
-          }
-        },
-        // TODO: enforce is suggested but I don't see why
-        enforce: 'post',
+        use: ['istanbul-instrumenter-loader', 'babel-loader'],
         exclude: /node_modules/
       }, {
         test: /\.scss$/,

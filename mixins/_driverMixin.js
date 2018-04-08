@@ -14,7 +14,7 @@ const path = require('path');
 const fs = require('fs')
 
 // Thrid party packages
-const {Builder, Browser, By} = require('selenium-webdriver')
+const {Builder, Browser, Platform, By} = require('selenium-webdriver')
 const compareImages = require('resemblejs/compareImages');
 const Jimp = require("jimp");
 const shell = require('shelljs');
@@ -68,11 +68,21 @@ module.exports = {
     let name = parts[0]
     if (name === 'ie') {
       name = Browser.IE
-    } else if (name === 'edge') {
+    } 
+    else if (name === 'edge') {
       name = Browser.EDGE
     }
     let version = parts[1]
     let platform = parts[2]
+    if (platform === 'mac') {
+      platform = Platform.MAC
+    }
+    else if (platform === 'window') {
+      platform = Platform.WINDOWS
+    }
+    else if (platform === 'linux') {
+      platform = Platform.LINUX
+    }
     return {name, version, platform}
   },
 
