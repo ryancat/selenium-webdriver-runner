@@ -109,7 +109,9 @@ module.exports = {
     .forBrowser(capability.name, capability.version, capability.platform)
     .build()
 
-    await this._setupBrowser(browserOptions)
+    // TODO: this cause chrome failed as it cannot set size for browser
+    // At this time.
+    // await this._setupBrowser(browserOptions)
     return this.driver
   },
 
@@ -149,7 +151,9 @@ module.exports = {
     .usingServer("http://" + sauceUsername + ":" + sauceToken + "@ondemand.saucelabs.com:80/wd/hub")
     .build()
 
-    await this._setupBrowser(browserOptions)
+    // TODO: this cause chrome failed as it cannot set size for browser
+    // At this time.
+    // await this._setupBrowser(browserOptions)
     return this.driver
   },
 
