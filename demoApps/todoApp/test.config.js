@@ -20,7 +20,7 @@ const config = {
   rootDir: __dirname,
 
   // Max number of runner instances allowed to run in parallel
-  maxInstance: 10,
+  maxInstance: 5,
 
   // Array of specs file path to run tests
   specs: [
@@ -54,16 +54,33 @@ const config = {
 
   // Target browser environments
   capabilities: [
-    { name: 'chrome', /* version: '65', platform: 'MAC' */ },
-    { name: 'firefox', /* version: '59', platform: 'MAC' */ },
-    // Safari requires version to be set
-    { name: 'safari', version: 10, /* platform: 'MAC' */ },
-    { name: 'ie', /* version: '11', platform: 'WINDOWS' */ }
+    { name: 'chrome', version: '65.0', platform: 'Windows 10' },
+    { name: 'chrome', version: '64.0', platform: 'Windows 10' },
+    { name: 'chrome', version: '48.0', platform: 'Linux' },
+    { name: 'chrome', version: '65.0', platform: 'macOS 10.13' },
+    { name: 'chrome', version: '64.0', platform: 'macOS 10.13' },
+    { name: 'chrome', version: '65.0', platform: 'macOS 10.12' },
+    { name: 'chrome', version: '64.0', platform: 'macOS 10.12' },
+    { name: 'firefox', version: '59.0', platform: 'Windows 10' },
+    { name: 'firefox', version: '58.0', platform: 'Windows 10' },
+    { name: 'firefox', version: '45.0', platform: 'Linux' },
+    { name: 'firefox', version: '59.0', platform: 'macOS 10.13' },
+    { name: 'firefox', version: '58.0', platform: 'macOS 10.13' },
+    { name: 'firefox', version: '59.0', platform: 'macOS 10.12' },
+    { name: 'firefox', version: '58.0', platform: 'macOS 10.12' },
+    // Safari test in version 11.0 has issue start virtual machine
+    // { name: 'safari', version: '11.0', platform: 'macOS 10.13' },
+    // { name: 'safari', version: '11.0', platform: 'macOS 10.12' },
+    { name: 'safari', version: '10.1', platform: 'macOS 10.12' },
+    { name: 'internet explorer', version: '10.0', platform: 'Windows 7' },
+    { name: 'internet explorer', version: '11.0', platform: 'Windows 7' },
+    { name: 'MicrosoftEdge', version: '16.16299', platform: 'Windows 10' },
+    { name: 'MicrosoftEdge', version: '14.14393', platform: 'Windows 10' }
   ],
 
   // Config saucelabs connection
   saucelabs: {
-    forCapabilities: ['chrome', 'firefox', 'ie', 'safari'],
+    forCapabilities: ['chrome', 'firefox', 'safari', 'internet explorer', 'MicrosoftEdge'],
     user: process.env.SAUCELABS_USER,
     token: process.env.SAUCELABS_APITOKEN
   },
