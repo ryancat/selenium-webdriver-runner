@@ -7,6 +7,7 @@
 // process.env.TEST_SERVER_PORT: '8000'
 // process.env.COVERAGE_REPORT_DIR: './.nyc'
 // process.env.COVERAGE_FILENAME: 'coverage.[hash].json'
+// process.env.BUILD_LABEL: 'some-build-label'
 
 // Nodejs native
 const crypto = require('crypto')
@@ -114,7 +115,8 @@ module.exports = {
 
   setupDriverWithSaucelabs: async function (browserOptions = {}) {
     let sauceUsername = process.env.SAUCELABS_USER,
-        sauceToken = process.env.SAUCELABS_APITOKEN
+        sauceToken = process.env.SAUCELABS_APITOKEN,
+        buildLabel = process.env.BUILD_LABEL || `${Date.now()}`
 
     if (!sauceUsername || !sauceToken) {
       throw new Error('saucelabs username or token not found in environment variable.\n'
@@ -137,6 +139,8 @@ module.exports = {
       version: capability.version || undefined,
       username: sauceUsername,
       accessKey: sauceToken,
+      build: buildLabel,
+      
       // More options to make test run less flaky
       'safari.options': {
         technologyPreview: true

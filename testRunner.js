@@ -36,6 +36,7 @@ const {mochaMixin, saucelabsMixin, nycMixin} = require('./mixins/forTestRunner')
 program
   .version(require(path.resolve(__dirname, 'package.json')).version)
   .option('-c, --config <path>', 'Test config file path')
+  .option('-b, --build-label [label]', 'Test config file path', `${Date.now()}`)
   .option('--no-remote-server', 'Do NOT Run any testing on remote server')
   .option('--use-reporter', 'Use test reporter instead of console output for test results')
   .option('--add-coverage-report', 'Add coverage report along with tests')
@@ -304,7 +305,8 @@ class TestRunner {
       COVERAGE_FILENAME: 'functional.coverage.[hash].json',
       SCREENSHOT_BASELINE_DIR: this.testConfig.screenshot.baselineDir,
       SCREENSHOT_DIFF_DIR: this.testConfig.screenshot.diffDir,
-      SCREENSHOT_DIR: this.testConfig.screenshot.screenshotDir
+      SCREENSHOT_DIR: this.testConfig.screenshot.screenshotDir,
+      BUILD_LABEL: program.buildLabel
     }
 
     if (this.testConfig.saucelabs.forCapabilities.includes(capability.name)) {
