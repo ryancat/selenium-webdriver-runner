@@ -1,52 +1,27 @@
 const assert = require('assert')
 const TodoApp = require('./pageObjects/TodoAppPage')
-// const PipeRunner = require('./utils/PipeRunner')
 
-// const testCapability = 
-
-// const {
-//   setupDriver, 
-//   quitDriver,
-//   getCapabilityToTestFromEnv,
-//   checkCapability
-// } = require('../../../libs/driverUtil')
-// const {assertChartVisualRegression} = require('./utils/assertUtil')
-
-// DONT use arrow function for tests API (describe, before, it, etc)
-// as it will carry wrong 'this' context into tests.
 describe('Add todo item', function () {
-  // let driver,
-  //     galleryPage,
-  //     barChartSection,
-  //     pipeRunner
-
-  let todoPage
-
-  beforeEach(async function () {
-    // TODO: check if we need to run in saucelabs remotely
-    // driver = await setupDriver(this.currentTest)
-    // galleryPage = new GalleryPage(driver)
-    // // TODO: should we create BarChartSection section object?
-    // barChartSection = new ChartSection(galleryPage, '#bar')
-    // pipeRunner = new PipeRunner(barChartSection)
+  let isAllTestsPassed = true,
+      todoPage
+      
+  before(async function () {
     todoPage = new TodoApp()
     await todoPage.startDriver()
   })
 
-  afterEach(async function () { 
-    // await quitDriver(driver, this.currentTest)
+  afterEach(async function () {
+    isAllTestsPassed = isAllTestsPassed && (this.currentTest.state === 'passed')
+  })
+
+  after(async function () {
     await todoPage.quitDriver({
-      testName: `${this.currentTest.parent.title} | ${this.currentTest.title}`,
-      isPassed: this.currentTest.state === 'passed'
+      testName: this.test.parent.title || 'Unnamed test',
+      isPassed: isAllTestsPassed
     })
   })
 
   it('should not add anything when add item content is empty', async function () {
-    // await pipeRunner
-    // .pipe('open', 'zoomIn')
-    // .done()
-
-    // await assertChartVisualRegression(barChartSection, driver, this.test)
     await todoPage.open()
     const todoItems = await todoPage.getTodoItems()
     const doneItems = await todoPage.getDoneItems()
