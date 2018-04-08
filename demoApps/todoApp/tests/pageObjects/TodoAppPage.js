@@ -80,6 +80,8 @@ module.exports = class TodoAppPage {
     }
 
     return todoItemContents
+    // TODO: Do not use Promise.all as this will cause saucelabs report error
+    // "ERROR user sent another command while waiting for command to complete"
     // return await Promise.all(todoItems.map(async (todoItem) => (await todoItem.getText()).trim()))
   }
 
@@ -100,6 +102,8 @@ module.exports = class TodoAppPage {
     }
 
     return doneItemContents
+    // TODO: Do not use Promise.all as this will cause saucelabs report error
+    // "ERROR user sent another command while waiting for command to complete"
     // return await Promise.all(doneItems.map(async (doneItem) => (await doneItem.getText()).trim()))
   }
 }
