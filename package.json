@@ -1,6 +1,6 @@
 {
   "name": "selenium-webdriver-runner",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Selenium webdriverjs Runner with example",
   "main": "testRunner.js",
   "bin": {
