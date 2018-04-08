@@ -70,7 +70,17 @@ module.exports = class TodoAppPage {
 
   async getTodoItemContents () {
     const todoItems = await this.getTodoItems()
-    return await Promise.all(todoItems.map(async (todoItem) => (await todoItem.getText()).trim()))
+    let todoItemContents = []
+    if (todoItems.length === 0) {
+      return []
+    }
+
+    for (let todoItem of todoItems) {
+      todoItemContents.push((await todoItem.getText()).trim())
+    }
+
+    return todoItemContents
+    // return await Promise.all(todoItems.map(async (todoItem) => (await todoItem.getText()).trim()))
   }
 
   async getDoneItems () {
@@ -79,6 +89,17 @@ module.exports = class TodoAppPage {
 
   async getDoneItemContents () {
     const doneItems = await this.getDoneItems()
-    return await Promise.all(doneItems.map(async (doneItem) => (await doneItem.getText()).trim()))
+
+    let doneItemContents = []
+    if (doneItems.length === 0) {
+      return []
+    }
+
+    for (let doneItem of doneItems) {
+      doneItemContents.push((await doneItem.getText()).trim())
+    }
+
+    return doneItemContents
+    // return await Promise.all(doneItems.map(async (doneItem) => (await doneItem.getText()).trim()))
   }
 }

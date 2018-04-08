@@ -45,13 +45,16 @@ module.exports = {
           : () => Promise.reject(`Task not found in context: ${nextPromiseCreator}`)
           break
 
-        case '[object Array]':
-          // When we see an array, we will try to pipe the elements inside and try to
-          // finish them asap with Promise.all
-          taskToPipe = (prevResolved) => Promise.all(
-            nextPromiseCreator.map((nextPromiseCreatorTask) => this._getTaskToPipe(nextPromiseCreatorTask)(prevResolved))
-          )
-          break
+        // TODO: When Using saucelabs, it will be bad to use Promise.all as instructions
+        // Should not be sent before the previous one is completed.
+        // To fix error: "ERROR user sent another command while waiting for command to complete"
+        // case '[object Array]':
+        //   // When we see an array, we will try to pipe the elements inside and try to
+        //   // finish them asap with Promise.all
+        //   taskToPipe = (prevResolved) => Promise.all(
+        //     nextPromiseCreator.map((nextPromiseCreatorTask) => this._getTaskToPipe(nextPromiseCreatorTask)(prevResolved))
+        //   )
+        //   break
 
         default:
           taskToPipe = () => Promise.reject(`Cannot pipe task: ${nextPromiseCreator}`)
