@@ -1,5 +1,5 @@
 // Mixin for test runner
-const sauceConnectLauncher = require('sauce-connect-launcher');
+const sauceConnectLauncher = require('sauce-connect-launcher')
 const {log, infoLog, warnLog, errorLog} = require('../libs/logUtil')
 
 module.exports = {
@@ -21,15 +21,15 @@ module.exports = {
         verbose: true
       }, async (err, sauceConnectProcess) => {
         if (err) {
-          errorLog(err.message);
-          reject(err);
+          errorLog(err.message)
+          reject(err)
         }
 
-        infoLog("Sauce connect ready");
+        infoLog("Sauce connect ready")
         this.sauceConnectProcess = sauceConnectProcess
-        resolve(sauceConnectProcess);
-      });
-    });
+        resolve(sauceConnectProcess)
+      })
+    })
   },
 
   closeSauceConnectProcess: async function () {
@@ -48,13 +48,13 @@ module.exports = {
         log("Sauce connect process closed")
         this.sauceConnectProcess = null
         resolve(true)
-      }); 
+      }) 
 
       // Closing sauce connect takes long time. Usually we actually don't care 
       // during the build and test time that if the sauce connect is closed. 
       // It will close eventually.
       // Comment this line out if want to wait for close
-      resolve(true)
-    });
+      // resolve(true)
+    })
   }
 }
