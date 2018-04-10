@@ -223,7 +223,7 @@ class TestRunner {
     if (capabilities.length === 0 || specs.length === 0) {
       // No browser or tests to test for. Do nothing.
       warnLog('No capability or tests to run against.\nPlease configure in test.config.js')
-      process.exit(0)
+      return await this.processExit(0)
     }
 
     infoLog(`Will test against capabilities: ${capabilities.map((cap) => cap.name).join(', ')}`)
@@ -241,7 +241,11 @@ class TestRunner {
     const saucelabsCapabilities = testConfig.saucelabs.forCapabilities
     if (saucelabsCapabilities.length
       && capabilities.some((cap) => saucelabsCapabilities.includes(cap.name))) {
-      this.sauceConnectProcess = await this.createSauceConnectProcess()
+      await this.createSauceConnectProcess()
+      console.log('this.sauceConnectProcess', this.sauceConnectProcess)
+      this.sauceConnectProcess.on('exit', (code) => {
+        console.log('sauce connect process exit', code)
+      })
     }
 
     for (let capability of capabilities) {
@@ -353,6 +357,20 @@ class TestRunner {
    * @param {Child_Process} testProcess 
    */
   listenTestProcess (testProcess) {
+    testProcess.stdout.on('data', (data) => {
+      if (data.toString().trim()) {
+        // Only log non-empty data
+        log(`[${testProcess.pid}][${testProcess.__processLabel}] ${data}`)
+      }
+    })
+
+    testProcess.stderr.on('data', (data) => {
+      if (data.toString().trim()) {
+        // Only log non-empty data
+        errorLog(`[${testProcess.pid}][${testProcess.__processLabel}] ${data}`)
+      }
+    })
+
     testProcess.on('exit', (code) => {
       (code === 0 ? infoLog : errorLog)(`[${testProcess.pid}][${testProcess.__processLabel}] process exit with code ${code}`)
       this.exitCode = this.exitCode || code
@@ -367,22 +385,8 @@ class TestRunner {
           this.startCoverageReportProcess()
         }
         else {
-          process.exit(this.exitCode)
+          this.processExit(this.exitCode)
         }
-      }
-    })
-
-    testProcess.stdout.on('data', (data) => {
-      if (data.toString().trim()) {
-        // Only log non-empty data
-        log(`[${testProcess.pid}][${testProcess.__processLabel}] ${data}`)
-      }
-    })
-
-    testProcess.stderr.on('data', (data) => {
-      if (data.toString().trim()) {
-        // Only log non-empty data
-        errorLog(`[${testProcess.pid}][${testProcess.__processLabel}] ${data}`)
       }
     })
   }
@@ -405,25 +409,30 @@ class TestRunner {
     })
     .on('SIGINT', () => {
       // ctrl+c event
-      warnLog('Interrupted by user.')
-      process.exit(1)
+      this.processExit(1, 'Interrupted by user. Some processes may not exit properly.')
     })
-    .on('exit', async (code, err) => {
-      // Kill the local server, if there is any
-      if (this.serverProcess) {
-        process.kill(this.serverProcess.pid)
-      }
-      
-      if (this.sauceConnectProcess) {
-        // Close the sauce connect process
-        infoLog('Closing sauce connect...')
-        await this.closeSauceConnectProcess()
-      }
-
-      // TODO: Kill test processes, if there is any (there shouldn't be any)
-      // log(`Tests finish in ${testRunner.getDuration()} ms.`)
+    .on('exit', (code, err) => {
       (code === 0 ? infoLog : errorLog)(`Test runner exit with code ${code} in ${Date.now() - this.startTimestamp} ms`)
     })
+  }
+
+  async processExit (code, err) {
+    // Kill the local server, if there is any
+    if (this.serverProcess) {
+      process.kill(this.serverProcess.pid)
+    }
+
+    if (this.sauceConnectProcess) {
+      // Close the sauce connect process
+      infoLog('Closing sauce connect...')
+      await this.closeSauceConnectProcess()
+    }
+
+    if (err) {
+      errorLog(err)
+    }
+
+    process.exit(code)
   }
 
   /**
@@ -445,7 +454,7 @@ class TestRunner {
   /**
    * Start the nyc test coverage process
    */
-  startCoverageReportProcess () {
+  async startCoverageReportProcess () {
     infoLog('Starting coverage report process...')
     
     // 'nyc report --reporter=text --cwd=./demoApps/todoApp/'
@@ -453,7 +462,7 @@ class TestRunner {
     .on('exit', (code) => {
       (code === 0 ? infoLog : errorLog)(`Coverage report process exit with code ${code}`)
       this.exitCode = this.exitCode || code
-      process.exit(this.exitCode)
+      this.processExit(this.exitCode)
     })
   }
 }
