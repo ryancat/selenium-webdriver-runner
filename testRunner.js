@@ -242,7 +242,6 @@ class TestRunner {
     if (saucelabsCapabilities.length
       && capabilities.some((cap) => saucelabsCapabilities.includes(cap.name))) {
       await this.createSauceConnectProcess()
-      console.log('this.sauceConnectProcess', this.sauceConnectProcess)
       this.sauceConnectProcess.on('exit', (code) => {
         console.log('sauce connect process exit', code)
       })
