@@ -237,7 +237,7 @@ class TestRunner {
       return await this.processExit(0)
     }
 
-    infoLog(`Will test against capabilities: ${capabilities.map((cap) => cap.name).join(', ')}`)
+    infoLog(`Will test against capabilities: ${capabilities.map((cap) => `${cap.name}:${cap.version}:${cap.platform}`).join(', ')}`)
 
     if (testConfig.server.isLocal) {
       // Start test environment
@@ -408,9 +408,6 @@ class TestRunner {
       (code === 0 ? infoLog : errorLog)(`[${testProcess.pid}][${testProcess.__processLabel}] Test finishes with exit code ${code}`)
       this.exitCode = this.exitCode || code
 
-      // Need to remove this test process from main process
-      this.testProcesses.splice(this.testProcesses.indexOf(testProcess), 1)
-      
       if (this.testProcesses.length === 0) {
         // If there is no more test processes available, all tests have been finished.
         if (program.addCoverageReport) {
