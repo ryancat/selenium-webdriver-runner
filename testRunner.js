@@ -42,6 +42,7 @@ program
   .option('--add-coverage-report', 'Add coverage report along with tests')
   .option('--in-chrome', 'Test with chrome')
   .option('--in-ie', 'Test with ie')
+  .option('--in-edge', 'Test with microsoft edge')
   .option('--in-firefox', 'Test with firefox')
   .option('--in-safari', 'Test with safari')
   .option('--in-all-browser', 'Test with all browser capabilities available')
@@ -96,39 +97,49 @@ class TestRunner {
       this.testConfig.saucelabs.forCapabilities = []
     }
 
+    // The retry logic
+    if (!this.testConfig.retry) {
+      this.testConfig.retry = 0
+    }
+
+    // Use headless browser if possible
+    if (!this.testConfig.useHeadlessBrowser) {
+      this.testConfig.useHeadlessBrowser = false
+    }
+
     // Add program arguments into testConfig
-    if (program.inChrome || program.inFirefox || program.inSafari || program.inIe || program.inAllBrowser) {
+    if (program.inChrome || program.inFirefox || program.inSafari || program.inIe || program.inEdge || program.inAllBrowser) {
       const originalCapabilities = this.testConfig.capabilities,
-            chromeConfig = Object.assign({ name: 'chrome' }, originalCapabilities.find((cap) => cap.name === 'chrome')),
-            firefoxConfig = Object.assign({ name: 'firefox' }, originalCapabilities.find((cap) => cap.name === 'firefox')),
-            safariConfig = Object.assign({ name: 'safari' }, originalCapabilities.find((cap) => cap.name === 'safari')),
-            ieConfig = Object.assign({ name: 'ie' }, originalCapabilities.find((cap) => cap.name === 'ie'))
-      
+            chromeConfigs = originalCapabilities.filter((cap) => cap.name === 'chrome'),
+            firefoxConfigs = originalCapabilities.filter((cap) => cap.name === 'firefox'),
+            safariConfigs = originalCapabilities.filter((cap) => cap.name === 'safari'),
+            ieConfigs = originalCapabilities.filter((cap) => cap.name === 'internet explorer'),
+            edgeConfigs = originalCapabilities.filter((cap) => cap.name === 'MicrosoftEdge')
+
       this.testConfig.capabilities = []
 
       if (program.inAllBrowser) {
-        this.testConfig.capabilities = [
-          chromeConfig,
-          firefoxConfig,
-          safariConfig,
-          ieConfig
-        ]
+        this.testConfig.capabilities = this.testConfig.capabilities.concat(chromeConfigs, firefoxConfigs, safariConfigs, ieConfigs, edgeConfigs)
       }
       else {
         if (program.inChrome) {
-          this.testConfig.capabilities.push(chromeConfig)
+          this.testConfig.capabilities = this.testConfig.capabilities.concat(chromeConfigs)
         }
-  
+
         if (program.inFirefox) {
-          this.testConfig.capabilities.push(firefoxConfig)
+          this.testConfig.capabilities = this.testConfig.capabilities.concat(firefoxConfigs)
         }
-  
+
         if (program.inSafari) {
-          this.testConfig.capabilities.push(safariConfig)
+          this.testConfig.capabilities = this.testConfig.capabilities.concat(safariConfigs)
         }
-  
+
         if (program.inIe) {
-          this.testConfig.capabilities.push(ieConfig)
+          this.testConfig.capabilities = this.testConfig.capabilities.concat(ieConfigs)
+        }
+
+        if (program.inEdge) {
+          this.testConfig.capabilities = this.testConfig.capabilities.concat(edgeConfigs)
         }
       }
     }
@@ -239,7 +250,8 @@ class TestRunner {
     // Assuming we are using saucelabs.
     // TODO: considering other test environments platform
     const saucelabsCapabilities = testConfig.saucelabs.forCapabilities
-    if (saucelabsCapabilities.length
+    if (program.remoteServer
+      && saucelabsCapabilities.length
       && capabilities.some((cap) => saucelabsCapabilities.includes(cap.name))) {
       await this.createSauceConnectProcess()
       this.sauceConnectProcess.on('exit', (code) => {
@@ -250,7 +262,7 @@ class TestRunner {
     for (let capability of capabilities) {
       // Start a child process for each capability
       if (program.remoteServer && testConfig.saucelabs.forCapabilities.includes(capability.name)) {
-        infoLog(`Start test against ${capability.name} remotely`)
+        infoLog(`Start test against ${capability.name}:${capability.version}:${capability.platform} remotely`)
         // This capability should run with saucelabs
         // When running on saucelabs, we are creating a session for each capability
         // with each spec, as long as we are within maxInstance limit.
@@ -260,7 +272,7 @@ class TestRunner {
         }
       }
       else {
-        infoLog(`\nStart test against ${capability.name} locally`)
+        infoLog(`\nStart test against ${capability.name}:${capability.version}:${capability.platform} locally`)
         // When running locally, we can only have the same capability
         // running for all specs due to the limitation of drivers
         this.startTestProcessThrottled(capability, testConfig.specs)
@@ -290,11 +302,14 @@ class TestRunner {
 
   /**
    * 
-   * @param {Object} capability 
-   * @param {Array} specs 
-   * @param {Object} options
+   * @param {Object} capability capability for test process
+   * @param {String} capability.name capability name
+   * @param {String} capability.version capability version
+   * @param {String} capability.platform capability platform
+   * @param {Array} specs spec paths to test
+   * @param {Number} retried times that we retried for the same test process
    */
-  startTestProcess (capability, specs) {
+  startTestProcess (capability, specs, retried = 0) {
     // Prepare for the test environment variables
     // TODO: need to document this
     const capabilityArg = `${capability.name}:${capability.version}:${capability.platform}`.replace(/undefined/g, '')
@@ -302,6 +317,7 @@ class TestRunner {
     let testEnv = {
       // Note: Firefox has issue with undefined version or platform
       TEST_CAPABILITY: capabilityArg,
+      USE_HEADLESS_BROWSER: this.testConfig.useHeadlessBrowser,
       // With nyc package, it will look for .nyc_output by default and there is no need to change that
       // See https://istanbul.js.org/docs/advanced/coverage-object-report/
       COVERAGE_REPORT_DIR: TestRunner.getAbsPath('.nyc_output/', this.testConfig.rootDir),
@@ -312,7 +328,7 @@ class TestRunner {
       BUILD_LABEL: program.buildLabel
     }
 
-    if (this.testConfig.saucelabs.forCapabilities.includes(capability.name)) {
+    if (program.remoteServer && this.testConfig.saucelabs.forCapabilities.includes(capability.name)) {
       // We are testing with saucelabs
       Object.assign(testEnv, {
         USE_SAUCELABS: true,
@@ -343,6 +359,9 @@ class TestRunner {
     })
     testRunner.testProcesses.push(testProcess)
     testProcess.__processLabel = capabilityArg
+    testProcess.__capability = capability
+    testProcess.__specs = specs
+    testProcess.__retried = retried
     this.listenTestProcess(testProcess)
 
     infoLog('\n-------------------------')
@@ -371,7 +390,22 @@ class TestRunner {
     })
 
     testProcess.on('exit', (code) => {
-      (code === 0 ? infoLog : errorLog)(`[${testProcess.pid}][${testProcess.__processLabel}] process exit with code ${code}`)
+      // Need to remove this test process from main process
+      this.testProcesses.splice(this.testProcesses.indexOf(testProcess), 1)
+      
+      if (code > 0 && this.testConfig.retry) {
+        // Retry logic for failure cases
+        testProcess.__retried++
+
+        if (testProcess.__retried <= this.testConfig.retry) {
+          // Still can retry
+          const {name, version, platform} = testProcess.__capability
+          infoLog(`${testProcess.__retried}/${this.testConfig.retry} Retry test against ${name}:${version}:${platform}`)
+          return this.startTestProcessThrottled(testProcess.__capability, testProcess.__specs, testProcess.__retried)
+        }
+      }
+
+      (code === 0 ? infoLog : errorLog)(`[${testProcess.pid}][${testProcess.__processLabel}] Test finishes with exit code ${code}`)
       this.exitCode = this.exitCode || code
 
       // Need to remove this test process from main process

@@ -90,7 +90,13 @@ const config = {
     baselineDir: 'tests/baseline/',
     diffDir: '.reports/screenshots/diff/',
     screenshotDir: '.reports/screenshots/shots/'
-  }
+  },
+
+  // Retry times
+  retry: 2,
+
+  // Using headless browser when run test locally
+  useHeadlessBrowser: true
 };
 
 module.exports = config;

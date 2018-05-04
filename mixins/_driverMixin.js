@@ -8,6 +8,7 @@
 // process.env.COVERAGE_REPORT_DIR: './.nyc'
 // process.env.COVERAGE_FILENAME: 'coverage.[hash].json'
 // process.env.BUILD_LABEL: 'some-build-label'
+// process.env.USE_HEADLESS_BROWSER: 'true'
 
 // Nodejs native
 const crypto = require('crypto')
@@ -16,6 +17,9 @@ const fs = require('fs')
 
 // Thrid party packages
 const {Builder, Browser, Platform, By} = require('selenium-webdriver')
+const chrome = require('selenium-webdriver/chrome')
+const firefox = require('selenium-webdriver/firefox')
+const safari = require('selenium-webdriver/safari')
 const compareImages = require('resemblejs/compareImages');
 const Jimp = require("jimp");
 const shell = require('shelljs');
@@ -91,7 +95,7 @@ module.exports = {
   /**
    * Start a driver with context
    */
-  startDriver: async function (browserOptions = {}) {
+  startDriver: async function (testInfo = {}) {
 
     const capability = this.getCapability()
 
@@ -101,21 +105,25 @@ module.exports = {
     }
 
     if (process.env.USE_SAUCELABS) {
-      this.driver = await this.setupDriverWithSaucelabs(browserOptions)
+      this.driver = await this.setupDriverWithSaucelabs(testInfo)
       return this.driver
     }
 
     this.driver = await (new Builder())
     .forBrowser(capability.name, capability.version, capability.platform)
+    .setChromeOptions(process.env.USE_HEADLESS_BROWSER ? new chrome.Options().headless() : null)
+    .setFirefoxOptions(process.env.USE_HEADLESS_BROWSER ? new firefox.Options().headless() : null)
     .build()
 
-    // TODO: this cause chrome failed as it cannot set size for browser
-    // At this time.
-    // await this._setupBrowser(browserOptions)
+    // Make sure we are on the first window handles
+    // This is to fix safari nosuchwindowerror. See https://jira2.workday.com/browse/PRISM-16046
+    const windowHandles = await this.driver.getAllWindowHandles()
+    await this.driver.switchTo().window(windowHandles[0])
+
     return this.driver
   },
 
-  setupDriverWithSaucelabs: async function (browserOptions = {}) {
+  setupDriverWithSaucelabs: async function (testInfo = {}) {
     let sauceUsername = process.env.SAUCELABS_USER,
         sauceToken = process.env.SAUCELABS_APITOKEN,
         buildLabel = process.env.BUILD_LABEL || `${Date.now()}`
@@ -141,19 +149,29 @@ module.exports = {
       version: capability.version || undefined,
       username: sauceUsername,
       accessKey: sauceToken,
-      build: buildLabel,
-      
-      // More options to make test run less flaky
-      'safari.options': {
-        technologyPreview: true
-      }
+      build: buildLabel
     })
+    .setSafariOptions(new safari.Options().setTechnologyPreview(true))
     .usingServer("http://" + sauceUsername + ":" + sauceToken + "@ondemand.saucelabs.com:80/wd/hub")
     .build()
 
-    // TODO: this cause chrome failed as it cannot set size for browser
-    // At this time.
-    // await this._setupBrowser(browserOptions)
+    // Update test name
+    const driverSessionId = (await this.driver.getSession()).getId(),
+          testName = testInfo.testName
+
+    await new Promise((resolve, reject) => {
+      saucelabs.updateJob(driverSessionId, {
+        name: testName
+      }, resolve)
+    })
+
+    infoLog(`Start: ${testName}`)
+
+    // Make sure we are on the first window handles
+    // This is to fix safari nosuchwindowerror. See https://jira2.workday.com/browse/PRISM-16046
+    const windowHandles = await this.driver.getAllWindowHandles()
+    await this.driver.switchTo().window(windowHandles[0])
+
     return this.driver
   },
 
@@ -198,12 +216,11 @@ module.exports = {
 
     await new Promise((resolve, reject) => {
       saucelabs.updateJob(driverSessionId, {
-        name: testName,
         passed: isPassed
       }, resolve)
     })
 
-    infoLog('Driver will quit.')
+    isPassed ? infoLog(`Success: ${testName}`) : errorLog(`Failed: ${testName}`)
     // Quit driver
     return this.driver.quit()
   },

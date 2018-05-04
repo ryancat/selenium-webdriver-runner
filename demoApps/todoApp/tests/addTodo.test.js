@@ -7,7 +7,9 @@ describe('Add todo item', function () {
       
   before(async function () {
     todoPage = new TodoApp()
-    await todoPage.startDriver()
+    await todoPage.startDriver({
+      testName: this.test.parent.title
+    })
   })
 
   afterEach(async function () {
@@ -16,7 +18,7 @@ describe('Add todo item', function () {
 
   after(async function () {
     await todoPage.quitDriver({
-      testName: this.test.parent.title || 'Unnamed test',
+      testName: this.test.parent.title,
       isPassed: isAllTestsPassed
     })
   })
