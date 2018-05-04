@@ -109,11 +109,22 @@ module.exports = {
       return this.driver
     }
 
-    this.driver = await (new Builder())
-    .forBrowser(capability.name, capability.version, capability.platform)
-    .setChromeOptions(process.env.USE_HEADLESS_BROWSER ? new chrome.Options().headless() : null)
-    .setFirefoxOptions(process.env.USE_HEADLESS_BROWSER ? new firefox.Options().headless() : null)
-    .build()
+    try {
+      this.driver = await (new Builder())
+      .forBrowser(capability.name, capability.version, capability.platform)
+      .setChromeOptions(process.env.USE_HEADLESS_BROWSER ? new chrome.Options().headless() : null)
+      .setFirefoxOptions(process.env.USE_HEADLESS_BROWSER ? new firefox.Options().headless() : null)
+      .build()
+    }
+    catch (err) {
+      if (err.name === 'SessionNotCreatedError'
+      && err.message === 'Unable to find a matching set of capabilities') {
+        // We cannot find capability for this environment
+        // I think this is not an valid test failure. Should warn user and quit
+        warnLog(`${err.message}: ${capability.name}:${capability.version}:${capability.platform}`)
+        process.exit()
+      }
+    }
 
     // Make sure we are on the first window handles
     // This is to fix safari nosuchwindowerror. See https://jira2.workday.com/browse/PRISM-16046
@@ -140,20 +151,31 @@ module.exports = {
       process.exit(0)
     }
 
-    // Node: at this time sauce connect should be established already
-    this.driver = await (new Builder())
-    .withCapabilities({
-      browserName: capability.name,
-      // platform or version could be empty string, but saucelabs doesn't like it
-      platform: capability.platform || undefined,
-      version: capability.version || undefined,
-      username: sauceUsername,
-      accessKey: sauceToken,
-      build: buildLabel
-    })
-    .setSafariOptions(new safari.Options().setTechnologyPreview(true))
-    .usingServer("http://" + sauceUsername + ":" + sauceToken + "@ondemand.saucelabs.com:80/wd/hub")
-    .build()
+    try {
+      // Node: at this time sauce connect should be established already
+      this.driver = await (new Builder())
+      .withCapabilities({
+        browserName: capability.name,
+        // platform or version could be empty string, but saucelabs doesn't like it
+        platform: capability.platform || undefined,
+        version: capability.version || undefined,
+        username: sauceUsername,
+        accessKey: sauceToken,
+        build: buildLabel
+      })
+      .setSafariOptions(new safari.Options().setTechnologyPreview(true))
+      .usingServer("http://" + sauceUsername + ":" + sauceToken + "@ondemand.saucelabs.com:80/wd/hub")
+      .build()
+    }
+    catch (err) {
+      if (err.name === 'SessionNotCreatedError'
+      && err.message === 'Unable to find a matching set of capabilities') {
+        // We cannot find capability for this environment
+        // I think this is not an valid test failure. Should warn user and quit
+        warnLog(`${err.message}: ${capability.name}:${capability.version}:${capability.platform}`)
+        process.exit()
+      }
+    }
 
     // Update test name
     const driverSessionId = (await this.driver.getSession()).getId(),
