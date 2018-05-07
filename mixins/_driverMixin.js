@@ -127,7 +127,7 @@ module.exports = {
     }
 
     // Make sure we are on the first window handles
-    // This is to fix safari nosuchwindowerror. See https://jira2.workday.com/browse/PRISM-16046
+    // This is to fix safari nosuchwindowerror.
     const windowHandles = await this.driver.getAllWindowHandles()
     await this.driver.switchTo().window(windowHandles[0])
 
@@ -190,7 +190,7 @@ module.exports = {
     infoLog(`Start: ${testName}`)
 
     // Make sure we are on the first window handles
-    // This is to fix safari nosuchwindowerror. See https://jira2.workday.com/browse/PRISM-16046
+    // This is to fix safari nosuchwindowerror.
     const windowHandles = await this.driver.getAllWindowHandles()
     await this.driver.switchTo().window(windowHandles[0])
 
